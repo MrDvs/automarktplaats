@@ -14,7 +14,13 @@ class CreateListingsTable extends Migration
     public function up()
     {
         Schema::create('listings', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
+
+            $table->string('title');
+            $table->text('description');
+            $table->timestamp('expiration_date');
+            $table->decimal('starting_price', 9, 2);
+
             $table->timestamps();
         });
     }

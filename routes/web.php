@@ -14,7 +14,12 @@
 // Auth routes
 Auth::routes();
 
+// Resource route for the listings
+Route::resource('listing', 'ListingController');
+
 // Main routes
 Route::get('/', 'PageController@index')->name('index');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+

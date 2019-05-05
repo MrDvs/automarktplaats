@@ -16,23 +16,23 @@ class CreateVehiclesTable extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('make');
-            $table->string('model');
-            $table->integer('milage');
-            $table->string('license_plate');
-            $table->string('color');
-            $table->string('state');
-            $table->timestamp('apk_expiration');
-            $table->string('transmission');
-            $table->integer('gears');
-            $table->integer('engine_capicity');
-            $table->integer('cylinders');
-            $table->integer('empty_weight');
-            $table->string('drive');
-            $table->string('fuel_type');
-            $table->integer('doors');
-            $table->integer('seats');
-            $table->integer('power');
+            $table->string('make')->nullable();
+            $table->string('model')->nullable();
+            $table->integer('milage')->nullable();
+            $table->string('license_plate')->nullable();
+            $table->string('color')->nullable();
+            $table->string('state')->nullable();
+            $table->timestamp('apk_expiration')->nullable();
+            $table->string('transmission')->nullable();
+            $table->integer('gears')->nullable();
+            $table->integer('engine_capicity')->nullable();
+            $table->integer('cylinders')->nullable();
+            $table->integer('empty_weight')->nullable();
+            $table->string('drive')->nullable();
+            $table->string('fuel_type')->nullable();
+            $table->integer('doors')->nullable();
+            $table->integer('seats')->nullable();
+            $table->integer('power')->nullable();
 
             $table->timestamps();
         });

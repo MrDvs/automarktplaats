@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\listing;
 
 class ListingController extends Controller
 {
@@ -13,7 +14,9 @@ class ListingController extends Controller
      */
     public function index()
     {
-        return view('listings.index');
+        $listings = Listing::all();
+        var_dump($listings);
+        // return view('listings.index');
     }
 
     /**

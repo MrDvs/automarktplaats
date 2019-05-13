@@ -21,7 +21,7 @@
 </head>
 <body>
 
-    <header>
+    {{-- <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
               <a class="navbar-brand" href="#">AutoMarktplaats</a>
@@ -82,9 +82,9 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header> --}}
 
-    {{-- <div id="app">
+    <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -139,6 +139,6 @@
         <main class="py-4">
             @yield('content')
         </main>
-    </div> --}}
+    </div>
 </body>
 </html>

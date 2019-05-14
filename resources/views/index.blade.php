@@ -2,6 +2,6 @@
 
 @section('content')
 	@foreach($vehicles as $vehicle)
-		<li>{{ $vehicle->make }} {{ $vehicle->model }} </li>
+		<li> {{print_r($vehicle)}} </li>
 	@endforeach
 @stop

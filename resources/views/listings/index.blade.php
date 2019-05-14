@@ -1,5 +1,7 @@
 @extends('layouts.default')
 
 @section('content')
-	nehauw
+	@foreach($listings as $listing)
+		{{print_r($listing)}}
+	@endforeach
 @endsection

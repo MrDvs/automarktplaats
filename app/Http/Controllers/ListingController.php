@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\listing;
+use \App\vehicle;
 
 class ListingController extends Controller
 {
@@ -14,9 +15,9 @@ class ListingController extends Controller
      */
     public function index()
     {
-        $listings = Listing::all();
-        var_dump($listings);
-        // return view('listings.index');
+        $listings = listing::with('vehicle')->get();
+        // var_dump($listings);
+        return view('listings.index', ['listings' => $listings]);
     }
 
     /**

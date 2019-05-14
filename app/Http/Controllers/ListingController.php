@@ -49,7 +49,8 @@ class ListingController extends Controller
      */
     public function show($id)
     {
-        //
+        $listing = listing::where('id', $id)->with('vehicle')->get();
+        return view('listings.show', ['listing' => $listing[0]]);
     }
 
     /**

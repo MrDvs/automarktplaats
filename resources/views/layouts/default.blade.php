@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	{{-- gets the title from the .env file --}}
 	<title>{{ config('app.name', 'Laravel') }}</title>
 
 	{{-- Load in the stylesheets --}}
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 	{{-- Load in Bootstrap JS --}}
 	<script src="{{ asset('js/app.js') }}" defer></script>
@@ -81,6 +83,9 @@
 		@yield('content')
 	</div>
 
+	{{-- <script>
+		$('.carousel').carousel()
+	</script> --}}
 
 </body>
 </html>

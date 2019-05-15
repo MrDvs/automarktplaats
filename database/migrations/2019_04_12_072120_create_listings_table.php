@@ -16,7 +16,7 @@ class CreateListingsTable extends Migration
         Schema::create('listings', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('img_path')->nullable();
+            $table->string('img_path')->default('./img/default.png');
             $table->string('title');
             $table->text('description');
             $table->timestamp('expiration_date');

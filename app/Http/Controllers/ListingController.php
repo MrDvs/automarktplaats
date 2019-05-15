@@ -38,7 +38,21 @@ class ListingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $listing = new listing();
+        $listing->title = request('title');
+        $listing->description = request('description');
+        $listing->starting_price = request('price');
+        $listing->save();
+
+        $vehicle = new vehicle();
+        $vehicle->listing_id = $listing->id;
+        $vehicle->make = request('make');
+        $vehicle->model = request('model');
+        $vehicle->save();
+
+        return redirect('listing/'.$listing->id);
+
+
     }
 
     /**
@@ -50,7 +64,14 @@ class ListingController extends Controller
     public function show($id)
     {
         $listing = listing::where('id', $id)->with('vehicle')->get();
-        return view('listings.show', ['listing' => $listing[0]]);
+        
+        // Checked of de listing bestaat (als count() niet 0 is).
+        if (count($listing)) {
+            return view('listings.show', ['listing' => $listing[0]]);
+        } else {
+            echo 'Deze listing bestaat niet <a href="'.route('listing.index').'">Ga terug</a>';
+        }
+
     }
 
     /**

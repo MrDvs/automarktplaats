@@ -11,7 +11,45 @@ Listing index
 	background-color: #fff;
 	border: 1px solid grey;
 	border-radius: 2px;
+	padding: 15px;
 	margin: 2vh;
+}
+
+.title-row, .listing-row {
+	margin: 0;
+}
+
+.listing-col {
+	padding: 0;
+}
+
+span.bold{
+	font-weight: bold;
+}
+
+.listing-preview-img img {
+	max-width: 400px;
+}
+
+@media (max-width: 769px) {
+
+	#listing-index-ul {
+		width: 100%;
+	}
+
+	.listing-index-li {
+		width: 100%;
+		margin: 2vh 0;
+	}
+	
+	.listing-preview-img {
+		margin-bottom: 1vh;
+	}
+
+	.listing-preview-img img {
+		max-width: 100%;
+	}
+
 }
 
 /*
@@ -22,7 +60,7 @@ Listing show
 }
 
 #listingImg {
-	width: 60%
+	width: 60%;
 }
 
 @media (max-width: 769px) {

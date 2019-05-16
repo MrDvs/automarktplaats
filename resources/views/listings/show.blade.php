@@ -36,10 +36,22 @@
 		<div class="float-right">
 			<h4 style="font-weight: bold;">Vehicle information:</h4>
 			<hr>
-			<h5>make: {{$listing['vehicle']->make}}</h5>
-			<h5>model: {{$listing['vehicle']->model}}</h5>
+			<h5>Merk: {{$listing['vehicle']->make}}</h5>
+			<h5>Model: {{$listing['vehicle']->model}}</h5>
+
+			<select name="" id="" style="width: 150px">
+				<option value="">neus</option>
+				<option value="">oor</option>
+			</select>
+
 		</div>
 	</div>
+
+	<script>
+		$(document).ready(function() {
+  $('select').niceSelect();
+});
+	</script>
 
 	{{ print_r($listing) }}
 @stop

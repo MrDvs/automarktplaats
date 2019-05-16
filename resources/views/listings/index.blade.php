@@ -33,7 +33,7 @@
 						</div>
 
 						<div class="starting-price">
-							<h5>Begin prijs: {{$listing['starting_price']}}</h5>
+							<h5>Begin prijs: €{{$listing['starting_price']}}</h5>
 						</div>
 
 					</div>

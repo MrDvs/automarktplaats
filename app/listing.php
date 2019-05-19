@@ -3,12 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-// use \app\vehicle;
 
 class listing extends Model
 {
 	public function vehicle()
 	{
-	    return $this->hasOne('App\vehicle');
+	    return $this->belongsTo('App\vehicle');
+	}
+
+	public function user()
+	{
+		return $this->belongsTo('App\User');
 	}
 }

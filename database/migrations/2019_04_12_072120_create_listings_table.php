@@ -16,6 +16,9 @@ class CreateListingsTable extends Migration
         Schema::create('listings', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->integer('user_id')->index();
+            $table->integer('vehicle_id')->index();
+
             $table->string('img_path')->default('./img/default.png');
             $table->string('title');
             $table->text('description');

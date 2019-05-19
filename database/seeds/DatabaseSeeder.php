@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         DB::table('vehicles')->insert([
             'listing_id' => 2,
             'make' => 'Audi',
-            'model' => 'R8',
+            'model' => 'RS6',
         ]);
 
         DB::table('listings')->insert([

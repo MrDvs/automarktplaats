@@ -5,8 +5,10 @@
 	<h1 id="title">{{ $listing->title }}</h1>
 
 	<div style="display: inline-block;">
-		<div class="float-left">
-			<div id="listingImg" class="carousel slide" data-ride="carousel">
+
+		<div class="carousel-container">
+
+			<div id="listingImg" class="carousel slide" data-ride="carousel"> 
 			  <ol class="carousel-indicators">
 			    <li data-target="#listingImg" data-slide-to="0" class="active"></li>
 			    {{-- <li data-target="#listingImg" data-slide-to="1"></li>
@@ -32,26 +34,17 @@
 			    <span class="sr-only">Next</span>
 			  </a>
 			</div>
+
 		</div>
-		<div class="float-right">
-			<h4 style="font-weight: bold;">Vehicle information:</h4>
+
+		<div class="vehicle-information">
+			<h4 style="font-weight: bold;">Voertuig informatie:</h4>
 			<hr>
 			<h5>Merk: {{$listing['vehicle']->make}}</h5>
 			<h5>Model: {{$listing['vehicle']->model}}</h5>
-
-			<select name="" id="" style="width: 150px">
-				<option value="">neus</option>
-				<option value="">oor</option>
-			</select>
-
 		</div>
-	</div>
 
-	<script>
-		$(document).ready(function() {
-  $('select').niceSelect();
-});
-	</script>
+	</div>
 
 	{{ print_r($listing) }}
 @stop

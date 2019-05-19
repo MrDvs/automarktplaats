@@ -59,14 +59,30 @@ Listing show
 	margin-top: 3vh;
 }
 
-#listingImg {
+.carousel-container {
+	border: 1px solid blue;
+	float: left; 
 	width: 60%;
+}
+
+#listingImg {
+	width: 100%;
+}
+
+.vehicle-information {
+	border: 1px solid red;
+	float: right;
+	width: 40%;
+	padding: 10px;
 }
 
 @media (max-width: 769px) {
 
-	#listingImg {
+	.carousel-container,
+	.vehicle-information {
 		width: 100%;
+		float: none;
+		padding: none;
 	}
 
 }

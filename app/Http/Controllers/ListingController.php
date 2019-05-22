@@ -18,7 +18,6 @@ class ListingController extends Controller
     public function index()
     {
         $listings = listing::with('vehicle')->get();
-        // var_dump($listings);
         return view('listings.index', ['listings' => $listings]);
     }
 
@@ -68,18 +67,6 @@ class ListingController extends Controller
     public function show($id)
     {
         $listing = listing::where('id', $id)->with('vehicle', 'user')->get();
-
-        switch ($listing[0]['vehicle']->state) {
-            case 'U':
-                $listing[0]['vehicle']->state = 'Gebruikt';
-                break;
-            
-            case 'N':
-                $listing[0]['vehicle']->state = 'Nieuw';
-                break;
-        }
-        
-        
         // Checked of de listing bestaat (als count() niet 0 is).
         if (count($listing)) {
             return view('listings.show', ['listing' => $listing[0]]);

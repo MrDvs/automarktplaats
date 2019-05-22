@@ -67,7 +67,7 @@ class ListingController extends Controller
     public function show($id)
     {
         $listing = listing::where('id', $id)->with('vehicle', 'user')->get();
-        
+
         switch ($listing[0]['vehicle']->state) {
             case 'U':
                 $listing[0]['vehicle']->state = 'Gebruikt';
@@ -75,6 +75,15 @@ class ListingController extends Controller
             
             case 'N':
                 $listing[0]['vehicle']->state = 'Nieuw';
+                break;
+        }
+        switch ($listing[0]['vehicle']->transmission) {
+            case 'A':
+                $listing[0]['vehicle']->transmission = 'Automaat';
+                break;
+            
+            case 'H':
+                $listing[0]['vehicle']->transmission = 'Handgeschakeld';
                 break;
         }
 

@@ -21,6 +21,7 @@ class CreateVehiclesTable extends Migration
             $table->string('model')->nullable();
             $table->integer('mileage')->nullable();
             $table->string('license_plate')->nullable();
+            $table->year('year')->nullable();
             $table->string('color')->nullable();
             $table->string('state')->nullable();
             $table->string('body_type')->nullable();

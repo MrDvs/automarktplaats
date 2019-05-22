@@ -16874,6 +16874,17 @@ return jQuery;
 
 /***/ }),
 
+/***/ "./node_modules/kentekenplaat/dist/js/kentekenplaat.min.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/kentekenplaat/dist/js/kentekenplaat.min.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var require;var require;!function(e){if(true)module.exports=e();else { var t; }}(function(){return function e(t,n,i){function r(s,u){if(!n[s]){if(!t[s]){var o="function"==typeof require&&require;if(!u&&o)return require(s,!0);if(a)return a(s,!0);var d=new Error("Cannot find module '"+s+"'");throw d.code="MODULE_NOT_FOUND",d}var f=n[s]={exports:{}};t[s][0].call(f.exports,function(e){var n=t[s][1][e];return r(n?n:e)},f,f.exports,e,t,n,i)}return n[s].exports}for(var a="function"==typeof require&&require,s=0;s<i.length;s++)r(i[s]);return r}({1:[function(e,t,n){"use strict";function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var r=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var i in n)Object.prototype.hasOwnProperty.call(n,i)&&(e[i]=n[i])}return e},a=function(){function e(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(t,n,i){return n&&e(t.prototype,n),i&&e(t,i),t}}(),s=function(){function e(t,n){i(this,e),this.options=r({},e.defaults,n),this.element=t||document.querySelector(".kentekenplaat"),this.element.setAttribute("maxlength",8),this.init()}return a(e,[{key:"init",value:function(){this.format(),this.addEventListeners()}},{key:"addEventListener",value:function(e){this.element.addEventListener(e,this.format.bind(this))}},{key:"addEventListeners",value:function(){this.options.events.forEach(this.addEventListener.bind(this))}},{key:"dispatch",value:function(e,t){var n=t?"kentekenplaat.valid":"kentekenplaat.invalid",i=new CustomEvent(n,{detail:{licenseplate:e}});this.element.dispatchEvent(i)}},{key:"format",value:function(){var e=this.parseLicenseplate();if(this.valid&&e.length<6&&(this.valid=!1,this.dispatch(e,this.valid)),this.valid=!1,6===e.length){var t=this.getSidecode();t&&(t<=6&&(e=e.substr(0,2)+"-"+e.substr(2,2)+"-"+e.substr(4,2)),7!==t&&9!==t||(e=e.substr(0,2)+"-"+e.substr(2,3)+"-"+e.substr(5,1)),8!==t&&10!==t||(e=e.substr(0,1)+"-"+e.substr(1,3)+"-"+e.substr(4,2)),11!==t&&14!==t||(e=e.substr(0,3)+"-"+e.substr(3,2)+"-"+e.substr(5,1)),12!==t&&13!==t||(e=e.substr(0,1)+"-"+e.substr(1,2)+"-"+e.substr(3,3)),this.valid=!0),this.dispatch(e,this.valid)}this.element.value=e}},{key:"getSidecode",value:function(){var t=this.parseLicenseplate(),n=e.sidecodes(),i=n.findIndex(function(e){return t.match(e)});return i+1}},{key:"parseLicenseplate",value:function(){return this.element.value.replace(/-/g,"").toUpperCase()}}],[{key:"sidecodes",value:function e(){var e=[];return e[0]=/^[a-zA-Z]{2}[\d]{2}[\d]{2}$/,e[1]=/^[\d]{2}[\d]{2}[a-zA-Z]{2}$/,e[2]=/^[\d]{2}[a-zA-Z]{2}[\d]{2}$/,e[3]=/^[a-zA-Z]{2}[\d]{2}[a-zA-Z]{2}$/,e[4]=/^[a-zA-Z]{2}[a-zA-Z]{2}[\d]{2}$/,e[5]=/^[\d]{2}[a-zA-Z]{2}[a-zA-Z]{2}$/,e[6]=/^[\d]{2}[a-zA-Z]{3}[\d]{1}$/,e[7]=/^[\d]{1}[a-zA-Z]{3}[\d]{2}$/,e[8]=/^[a-zA-Z]{2}[\d]{3}[a-zA-Z]{1}$/,e[9]=/^[a-zA-Z]{1}[\d]{3}[a-zA-Z]{2}$/,e[10]=/^[a-zA-Z]{3}[\d]{2}[a-zA-Z]{1}$/,e[11]=/^[a-zA-Z]{1}[\d]{2}[a-zA-Z]{3}$/,e[12]=/^[\d]{1}[a-zA-Z]{2}[\d]{3}$/,e[13]=/^[\d]{3}[a-zA-Z]{2}[\d]{1}$/,e}}]),e}();s.defaults={events:["keyup","focus"]},t.exports=s},{}]},{},[1])(1)});
+
+/***/ }),
+
 /***/ "./node_modules/lodash/lodash.js":
 /*!***************************************!*\
   !*** ./node_modules/lodash/lodash.js ***!
@@ -49269,6 +49280,7 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+window.kentekenplaat = __webpack_require__(/*! kentekenplaat */ "./node_modules/kentekenplaat/dist/js/kentekenplaat.min.js");
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

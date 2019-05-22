@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -41,6 +42,24 @@ class DatabaseSeeder extends Seeder
         DB::table('vehicles')->insert([
             'make' => 'Audi',
             'model' => 'R8',
+            'mileage' => 3700,
+            'license_plate' => 'SF186K',
+            'color' => 'Wit',
+            'state' => 'U',
+            'body_type' => 'Coupe',
+            'apk_expiration' => '2020-09-02',
+            'transmission' => 'A',
+            'gears' => 7,
+            'engine_capicity' => 5204,
+            'cylinders' => 10,
+            'empty_weight' => 1530,
+            'drive' => 'AWD',
+            'fuel_type' => 'B',
+            'doors' => 2,
+            'seats' => 2,
+            'power' => 611,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         DB::table('listings')->insert([
@@ -55,6 +74,7 @@ class DatabaseSeeder extends Seeder
         DB::table('vehicles')->insert([
             'make' => 'Audi',
             'model' => 'RS6',
+            'state' => 'N',
         ]);
 
         DB::table('listings')->insert([

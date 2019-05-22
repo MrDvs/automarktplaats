@@ -35,4 +35,28 @@
 
 		<button type="submit">Create Listing</button>
 	</form>
+	<div class="container">
+		<input type="text" name="licenseplate" class="licenseplate" id="licenseplate" maxlength="7" placeholder="06JFZ7"/>
+	</div>
+	<script>
+		$('#licenseplate').on('keyup', (function() {
+
+			// ajax request
+			var licenseplate = $('#licenseplate').val();
+
+			$.ajax({
+			    url: "https://opendata.rdw.nl/resource/m9d7-ebf2.json",
+			    type: "GET",
+			    data: {
+			      "kenteken" : licenseplate.toUpperCase(),
+			      "$limit" : 5000,
+			      "$$app_token" : {{$RDW_APP_TOKEN}}
+			    }
+			}).done(function(data) {
+			  alert(data[0]["merk"]+" "+data[0]["handelsbenaming"]);
+			  console.log(data);
+			});
+
+		}))
+	</script>
 @endsection

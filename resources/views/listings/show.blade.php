@@ -42,9 +42,11 @@
 			<hr>
 			<h5>Merk: {{$listing['vehicle']->make}}</h5>
 			<h5>Model: {{$listing['vehicle']->model}}</h5>
-			<h5>Km stand: {{$listing['vehicle']->mileage}}</h5>
+			<h5>Km stand: {{$listing['vehicle']->mileage}} km</h5>
 			<h5>Kenteken: {{$listing['vehicle']->license_plate}}</h5>
 			<h5>Kleur: {{$listing['vehicle']->color}}</h5>
+			<h5>Staat: {{$listing['vehicle']->state}}</h5>
+			<h5>Caroserie: {{$listing['vehicle']->body_type}}</h5>
 			<h5>APK vervaldatum: {{$listing['vehicle']->apk_expiration}}</h5>
 			<h5>Versnellingsbak: {{$listing['vehicle']->transmission}}</h5>
 			<h5>Versnellingen: {{$listing['vehicle']->gears}}</h5>

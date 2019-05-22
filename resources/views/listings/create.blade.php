@@ -6,69 +6,199 @@
 
 	<h1 class="text-center">Verkoop je auto!</h1>
 
-	<div class="row">
-		<div class="col-md-7">
-			<h2 class="text-center">Vul zelf de informatie in:</h2>
+	
+		
 			<form action="{{ url('listing') }}" method="POST">
 
 				{{-- De csrf token beschermd tegen cross-site request forgery --}}
 				{{ csrf_field() }}
-				
-				<h4>Listing information:</h4>
-				<hr>
+				<div class="row">
+					<div class="col-md-7">
+						<h3 class="text-center">Advertentie informatie:</h3>
+						<hr>
+						
+						<div class="form-group">
+							<label for="titleInput">Advertentie titel</label>
+							<input type="text" id="titleInput" class="form-control" name="title" {{-- onkeypress="charCount('#titleInput')" --}} placeholder="Titel" maxlength="191" required>
+							{{-- <span class="counter">0</span>/191 --}}
+						</div>
 
-				Title: 
-				<input type="text" name="title" placeholder="Listing title" required>
-				<br><br>
+						<div class="form-group">
+							<label for="descriptionInput">Advertentie beschrijving</label>
+							{{-- <input type="text" id="descriptionInput" class="form-control" name="description" placeholder="Beschrijving" maxlength="191" required> --}}
+							<textarea name="description" id="descriptionInput" class="form-control" placeholder="Beschrijving" style="width: 100%" required></textarea>
+						</div>
 
-				Description: 
-				<input type="text" name="description" placeholder="Listing description" required>
-				<br><br>
+						<div class="form-group">
+							<label for="priceInput">Begin prijs</label>
+							<input type="number" id="priceInput" class="form-control" name="price" required>
+						</div>
 
-				Starting price: 
-				<input type="text" name="price" placeholder="Vehicle price" required>
-				<br><br>
+					</div>	
+					<div class="col-md-5">
 
-				<h4>Your vehicle:</h4>
-				<hr>
+						<h3 class="text-center">Voertuig informatie:</h3>
+						<hr>
+					
+						<h2 class="text-center">Voer hier je kenteken in:</h2>
+						<div class="kenteken-container" style="width: 150px; margin: auto; padding-bottom: 2vh">
+							<input type="text" class="kentekenplaat">
+						</div>
+						<span class="warning"></span>
+	
+						<div class="form-group">
+							<label for="makeInput">Merk</label>
+							<input type="text" id="makeInput" class="form-control" name="make" placeholder="merk" required>
+						</div>
 
-				Make: 
-				<input type="text" name="make" placeholder="Vehicle make" required>
-				<br><br>
+						<div class="form-group">
+							<label for="modelInput">Model</label>
+							<input type="text" id="modelInput" class="form-control" name="model" placeholder="model" required>
+						</div>
+						<hr>
 
-				Model: 
-				<input type="text" name="model" placeholder="Vehicle model" required>
-				<br><br>
+						<div class="form-group">
+							<label for="mileageInput">Kilometer stand</label>
+							<input type="number" id="mileageInput" class="form-control" name="mileage" placeholder="Kilometer stand" required>
+						</div>
 
-				<button type="submit">Create Listing</button>
+						<div class="form-group">
+							<label for="licenseplateInput">Kenteken</label>
+							<input type="text" id="licenseplateInput" class="form-control" name="licenseplate" placeholder="Kenteken" required>
+						</div>
+						
+						<div class="form-group">
+							<label for="yearInput">Bouwjaar</label>
+							<input type="text" id="yearInput" class="form-control" name="year" placeholder="Bouwjaar" required>
+						</div>
+
+						<div class="form-group">
+							<label for="colorInput">Kleur</label>
+							<input type="text" id="colorInput" class="form-control" name="color" placeholder="Kleur" required>
+						</div>
+						
+						<div class="form-group">
+							<label for="stateInput">Staat</label>
+							<select class="form-control" name="state" class="custom-select" id="stateInput">
+							  <option value="U" selected>Gebruikt</option>
+							  <option value="N">Nieuw</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="bodyInput">Carroserie</label>
+							<input type="text" id="bodyInput" class="form-control" name="body" placeholder="Carroserie" required>
+						</div>
+
+						<div class="form-group">
+							<label for="apkInput">APK vervaldatum</label>
+							<input type="text" id="apkInput" class="form-control" name="apk" placeholder="APK vervaldatum" required>
+						</div>
+
+						<div class="form-group">
+							<label for="transmissionInput">Type versnellingsbak</label>
+							<input type="text" id="transmissionInput" class="form-control" name="transmission" placeholder="Type versnellingsbak" required>
+						</div>
+
+						<div class="form-group">
+							<label for="gearInput">Aantal versnellingen</label>
+							<input type="number" id="gearInput" class="form-control" name="transmission" placeholder="Aantal versnellingen" required>
+						</div>
+
+						<div class="form-group">
+							<label for="capacityInput">Motor inhoud</label>
+							<input type="number" id="capacityInput" class="form-control" name="capacity" placeholder="Motor inhoud">
+						</div>
+
+						<div class="form-group">
+							<label for="cylinderInput">Aantal cilinders</label>
+							<input type="number" id="cylinderInput" class="form-control" name="cylinder" placeholder="Aantal cilinders" required>
+						</div>
+
+						<div class="form-group">
+							<label for="weightInput">Leeggewicht</label>
+							<input type="number" id="weightInput" class="form-control" name="weight" placeholder="Leeggewicht">
+						</div>
+
+						<div class="form-group">
+							<label for="driveInput">Aandrijving</label>
+							<input type="text" id="driveInput" class="form-control" name="drive" placeholder="Aandrijving">
+						</div>
+						
+						<div class="form-group">
+							<label for="fuelInput">Brandstof</label>
+							<select name="fuel" id="fuelInput" class="custom-select">
+							  <option selected disabled>Brandstof</option>
+							  <option value="E">Elektrisch</option>
+							  <option value="B">Benzine</option>
+							  <option value="D">Diesel</option>
+							  <option value="L">LPG</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="doorInput">Aantal deuren</label>
+							<input type="number" id="doorInput" class="form-control" name="door" placeholder="Aantal deuren">
+						</div>
+
+						<div class="form-group">
+							<label for="seatInput">Aantal zitplaatsen</label>
+							<input type="number" id="seatInput" class="form-control" name="seat" placeholder="Aantal zitplaatsen">
+						</div>
+
+						<div class="form-group">
+							<label for="powerInput">Vermogen (pk)</label>
+							<input type="number" id="powerInput" class="form-control" name="power" placeholder="Vermogen">
+						</div>
+						
+					</div>
+				</div>
+
+				<button type="submit">Plaats advertentie</button>
 			</form>
-		</div>
-
-		<div class="col-md-5" style="border: 1px solid red">
-			<h2 class="text-center">Of voer hier je kenteken in:</h2>
-			<div class="kenteken-div" style="width: 150px; margin: auto;">
-				<input type="text" class="kentekenplaat">
-			</div>
-		</div>
-	</div>	
+		
 	<script>
-		$('#licenseplate').on('keyup', (function() {
+		// function charCount(id) {
+		// 	console.log(this)
+		// 	var charCount = $(id).val();
+		// 	$('.counter').text(charCount.length );
+		// }
+
+		$('.kentekenplaat').on('keyup', (function() {
 
 			// ajax request
-			var licenseplate = $('#licenseplate').val();
+			var licenseplate = $('.kentekenplaat').val();
+			
+				$.ajax({
+				    url: "https://opendata.rdw.nl/resource/m9d7-ebf2.json",
+				    type: "GET",
+				    data: {
+				      "kenteken" : licenseplate.toUpperCase(),
+				      "$limit" : 5000,
+				      "$$app_token" : '{{$RDW_APP_TOKEN}}'
+				    }
+				}).done(function(data) {
 
-			$.ajax({
-			    url: "https://opendata.rdw.nl/resource/m9d7-ebf2.json",
-			    type: "GET",
-			    data: {
-			      "kenteken" : licenseplate.toUpperCase(),
-			      "$limit" : 5000,
-			      "$$app_token" : '{{$RDW_APP_TOKEN}}'
-			    }
-			}).done(function(data) {
-			  alert(data[0]["merk"]+" "+data[0]["handelsbenaming"]);
-			  console.log(data);
-			});
+				  $('.warning').text('Let op: controleer en verbeter alle invoervelden')
+
+				  $('#makeInput').val(data[0]["merk"])	
+				  $('#modelInput').val(data[0]["handelsbenaming"])	
+				  $('#cylinderInput').val(data[0]["aantal_cilinders"])	
+				  $('#doorInput').val(data[0]["aantal_deuren"])
+				  $('#seatInput').val(data[0]["aantal_zitplaatsen"])
+				  $('#capacityInput').val(data[0]["cilinderinhoud"])
+				  $('#yearInput').val(data[0]["datum_eerste_toelating"])
+				  $('#colorInput').val(data[0]["eerste_kleur"])
+				  $('#bodyInput').val(data[0]["inrichting"])
+				  $('#licenseplateInput').val(data[0]["kenteken"])
+				  $('#weightInput').val(data[0]["massa_ledig_voertuig"])
+				  $('#apkInput').val(data[0]["vervaldatum_apk"])
+
+
+				  console.log(data[0]["merk"]+" "+data[0]["handelsbenaming"]);
+				  console.log(data);
+				});
+
 
 			$.ajax({
 			    url: "https://opendata.rdw.nl/resource/8ys7-d773.json",
@@ -79,7 +209,7 @@
 			      "$$app_token" : '{{$RDW_APP_TOKEN}}'
 			    }
 			}).done(function(data) {
-			  console.log(data);
+			  // $('#fuelInput').val(data[0][''])
 			});
 
 

@@ -140,7 +140,7 @@ class ListingController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('listings.edit');
     }
 
     /**

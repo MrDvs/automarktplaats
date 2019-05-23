@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'street_number' => '99',
             'zipcode' => '3251 NB',
             'email' => 'admin@admin.nl',
+            'phone' => '0612345678',
             'password' => bcrypt('admin123'),
             'is_admin' => 1,
         ]);

@@ -96,32 +96,32 @@ class ListingController extends Controller
     {
         $listing = listing::where('id', $id)->with('vehicle', 'user')->get();
 
-        // switch ($listing[0]['vehicle']->state) {
-        //     case 'U':
-        //         $listing[0]['vehicle']->state = 'Gebruikt';
-        //         break;
+        switch ($listing[0]['vehicle']->state) {
+            case 'U':
+                $listing[0]['vehicle']->state = 'Gebruikt';
+                break;
             
-        //     case 'N':
-        //         $listing[0]['vehicle']->state = 'Nieuw';
-        //         break;
+            case 'N':
+                $listing[0]['vehicle']->state = 'Nieuw';
+                break;
 
-        //     default:
-        //         break;
-        // }
-        // switch ($listing[0]['vehicle']->transmission) {
-        //     case 'A':
-        //         $listing[0]['vehicle']->transmission = 'Automaat';
-        //         break;
+            default:
+                break;
+        }
+        switch ($listing[0]['vehicle']->transmission) {
+            case 'A':
+                $listing[0]['vehicle']->transmission = 'Automaat';
+                break;
             
-        //     case 'H':
-        //         $listing[0]['vehicle']->transmission = 'Handgeschakeld';
-        //         break;
+            case 'H':
+                $listing[0]['vehicle']->transmission = 'Handgeschakeld';
+                break;
 
-        //     default:
-        //         break;
-        // }
+            default:
+                break;
+        }
 
-        $listing[0]['vehicle']->transmission = carbon::parse($listing[0]['vehicle']->transmission)->format("d-m-Y");
+        $listing[0]['vehicle']->apk_expiration = carbon::parse($listing[0]['vehicle']->apk_expiration)->format("d-m-Y");
 
         // Checked of de listing bestaat (als count() niet 0 is).
         if (count($listing)) {

@@ -102,7 +102,7 @@
 
 						<div class="form-group">
 							<label for="gearInput">Aantal versnellingen</label>
-							<input type="number" id="gearInput" class="form-control" name="transmission" placeholder="Aantal versnellingen" required>
+							<input type="number" id="gearInput" class="form-control" name="gear" placeholder="Aantal versnellingen" required>
 						</div>
 
 						<div class="form-group">
@@ -129,10 +129,11 @@
 							<label for="fuelInput">Brandstof</label>
 							<select name="fuel" id="fuelInput" class="custom-select">
 							  <option selected disabled>Brandstof</option>
-							  <option value="E">Elektrisch</option>
-							  <option value="B">Benzine</option>
-							  <option value="D">Diesel</option>
-							  <option value="L">LPG</option>
+							  <option value="Elektriciteit">Elektrisch</option>
+							  <option value="Hybride">Hybride</option>
+							  <option value="Benzine">Benzine</option>
+							  <option value="Diesel">Diesel</option>
+							  <option value="LPG">LPG</option>
 							</select>
 						</div>
 
@@ -168,6 +169,8 @@
 
 			// ajax request
 			var licenseplate = $('.kentekenplaat').val();
+
+			if (licenseplate.length >= 6 ) {
 			
 				$.ajax({
 				    url: "https://opendata.rdw.nl/resource/m9d7-ebf2.json",
@@ -178,41 +181,52 @@
 				      "$$app_token" : '{{$RDW_APP_TOKEN}}'
 				    }
 				}).done(function(data) {
-
-				  $('.warning').text('Let op: controleer en verbeter alle invoervelden')
-
+				  if (data[0] && licenseplate.length > 0) {
+					  $('.warning').text('Let op: controleer en verbeter alle invoervelden')
+				  }
 				  $('#makeInput').val(data[0]["merk"])	
 				  $('#modelInput').val(data[0]["handelsbenaming"])	
 				  $('#cylinderInput').val(data[0]["aantal_cilinders"])	
 				  $('#doorInput').val(data[0]["aantal_deuren"])
 				  $('#seatInput').val(data[0]["aantal_zitplaatsen"])
 				  $('#capacityInput').val(data[0]["cilinderinhoud"])
-				  $('#yearInput').val(data[0]["datum_eerste_toelating"])
+				  $('#yearInput').val(data[0]["datum_eerste_toelating"].substring(0,4))
 				  $('#colorInput').val(data[0]["eerste_kleur"])
 				  $('#bodyInput').val(data[0]["inrichting"])
 				  $('#licenseplateInput').val(data[0]["kenteken"])
 				  $('#weightInput').val(data[0]["massa_ledig_voertuig"])
-				  $('#apkInput').val(data[0]["vervaldatum_apk"])
 
+				  var year = data[0]["vervaldatum_apk"].substring(0,4)
+				  var month = data[0]["vervaldatum_apk"].substring(4,6)
+				  var day = data[0]["vervaldatum_apk"].substring(6,8)
+				  
+				  $('#apkInput').val(day+"-"+month+"-"+year)
+
+				  $.ajax({
+				    url: "https://opendata.rdw.nl/resource/8ys7-d773.json",
+				    type: "GET",
+				    data: {
+				      "kenteken" : licenseplate.toUpperCase(),
+				      "$limit" : 5000,
+				      "$$app_token" : '{{$RDW_APP_TOKEN}}'
+				    }
+				  }).done(function(data) {
+				    console.log(data)
+				    console.log(data.length)
+				    if (data.length > 1) {
+				    	if (data[0]["brandstof_omschrijving"] == "Elektriciteit" || data[1]["brandstof_omschrijving"] == "Elektriciteit") {
+				    		$('#fuelInput').val("Hybride")
+				    	}
+				    } else {
+				    	$('#fuelInput').val(data[0]["brandstof_omschrijving"])
+				    }
+				  });
 
 				  console.log(data[0]["merk"]+" "+data[0]["handelsbenaming"]);
 				  console.log(data);
 				});
 
-
-			$.ajax({
-			    url: "https://opendata.rdw.nl/resource/8ys7-d773.json",
-			    type: "GET",
-			    data: {
-			      "kenteken" : licenseplate.toUpperCase(),
-			      "$limit" : 5000,
-			      "$$app_token" : '{{$RDW_APP_TOKEN}}'
-			    }
-			}).done(function(data) {
-			  // $('#fuelInput').val(data[0][''])
-			});
-
-
+			}
 
 		}))
 	</script>

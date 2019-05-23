@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use \App\listing;
 use \App\vehicle;
-use Illuminate\Support\Facades\Auth;
+
 
 
 class ListingController extends Controller
 {
+    public function __construct()
+    {
+        // Dit zorgt er voor dat de create blade alleen toegangelijk is voor ingelogde users
+        $this->middleware('auth', ['only' => 'create']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +24,7 @@ class ListingController extends Controller
      */
     public function index()
     {
+        // Haal alle listings op uit de database
         $listings = listing::with('vehicle')->get();
         return view('listings.index', ['listings' => $listings]);
     }
@@ -28,6 +36,7 @@ class ListingController extends Controller
      */
     public function create()
     {
+        // Haalt de RDW app token uit de .env file voor de api call
         $RDW_APP_TOKEN = env('RDW_APP_TOKEN');  
         return view('listings.create', ['RDW_APP_TOKEN' => $RDW_APP_TOKEN]);
     }
@@ -43,6 +52,25 @@ class ListingController extends Controller
         $vehicle = new vehicle();
         $vehicle->make = request('make');
         $vehicle->model = request('model');
+
+        $vehicle->mileage = request('mileage');
+        $vehicle->license_plate = request('licenseplate');
+        $vehicle->year = request('year');
+        $vehicle->color = request('color');
+        $vehicle->state = request('state');
+        $vehicle->body_type = request('body');
+        $vehicle->apk_expiration = carbon::parse(request('apk'))->format("Y-m-d");
+        $vehicle->transmission = request('transmission');
+        $vehicle->gears = request('gear');
+        $vehicle->engine_capicity = request('capacity');
+        $vehicle->cylinders = request('cylinder');
+        $vehicle->empty_weight = request('weight');
+        $vehicle->drive = request('drive');
+        $vehicle->fuel_type = request('fuel');
+        $vehicle->doors = request('door');
+        $vehicle->seats = request('seat');
+        $vehicle->power = request('power');
+
         $vehicle->save();
 
         $listing = new listing();
@@ -68,24 +96,32 @@ class ListingController extends Controller
     {
         $listing = listing::where('id', $id)->with('vehicle', 'user')->get();
 
-        switch ($listing[0]['vehicle']->state) {
-            case 'U':
-                $listing[0]['vehicle']->state = 'Gebruikt';
-                break;
+        // switch ($listing[0]['vehicle']->state) {
+        //     case 'U':
+        //         $listing[0]['vehicle']->state = 'Gebruikt';
+        //         break;
             
-            case 'N':
-                $listing[0]['vehicle']->state = 'Nieuw';
-                break;
-        }
-        switch ($listing[0]['vehicle']->transmission) {
-            case 'A':
-                $listing[0]['vehicle']->transmission = 'Automaat';
-                break;
+        //     case 'N':
+        //         $listing[0]['vehicle']->state = 'Nieuw';
+        //         break;
+
+        //     default:
+        //         break;
+        // }
+        // switch ($listing[0]['vehicle']->transmission) {
+        //     case 'A':
+        //         $listing[0]['vehicle']->transmission = 'Automaat';
+        //         break;
             
-            case 'H':
-                $listing[0]['vehicle']->transmission = 'Handgeschakeld';
-                break;
-        }
+        //     case 'H':
+        //         $listing[0]['vehicle']->transmission = 'Handgeschakeld';
+        //         break;
+
+        //     default:
+        //         break;
+        // }
+
+        $listing[0]['vehicle']->transmission = carbon::parse($listing[0]['vehicle']->transmission)->format("d-m-Y");
 
         // Checked of de listing bestaat (als count() niet 0 is).
         if (count($listing)) {

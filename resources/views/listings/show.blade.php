@@ -51,14 +51,14 @@
 			<h5>APK vervaldatum: {{$listing['vehicle']->apk_expiration}}</h5>
 			<h5>Versnellingsbak: {{$listing['vehicle']->transmission}}</h5>
 			<h5>Versnellingen: {{$listing['vehicle']->gears}}</h5>
-			<h5>Motor inhoud: {{$listing['vehicle']->engine_capicity}}</h5>
+			<h5>Motor inhoud: {{$listing['vehicle']->engine_capicity}} cc</h5>
 			<h5>Aantal cilinders: {{$listing['vehicle']->cylinders}}</h5>
 			<h5>Leeg gewicht: {{$listing['vehicle']->empty_weight}}</h5>
 			<h5>Aandrijving: {{$listing['vehicle']->drive}}</h5>
 			<h5>Brandstof: {{$listing['vehicle']->fuel_type}}</h5>
 			<h5>Aantal deuren: {{$listing['vehicle']->doors}}</h5>
 			<h5>Aantal zitplaatsen: {{$listing['vehicle']->seats}}</h5>
-			<h5>Vermogen: {{$listing['vehicle']->power}}</h5>
+			<h5>Vermogen: {{$listing['vehicle']->power}} PK</h5>
 
 			
 		</div>

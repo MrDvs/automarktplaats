@@ -121,6 +121,7 @@ class ListingController extends Controller
                 break;
         }
 
+        // Zet het format om naar dag-maand-jaar
         $listing[0]['vehicle']->apk_expiration = carbon::parse($listing[0]['vehicle']->apk_expiration)->format("d-m-Y");
 
         // Checked of de listing bestaat (als count() niet 0 is).
@@ -140,7 +141,8 @@ class ListingController extends Controller
      */
     public function edit($id)
     {
-        return view('listings.edit');
+        $listing = listing::find($id);
+        return view('listings.edit', ['listing' => $listing]);
     }
 
     /**
@@ -152,7 +154,12 @@ class ListingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $listing = listing::find($id);
+        $listing->title = request('title');
+        $listing->description = request('description');
+        $listing->save();
+
+        return redirect('listing/')->with('message', 'Je advertentie is succesvol aangepast!');
     }
 
     /**

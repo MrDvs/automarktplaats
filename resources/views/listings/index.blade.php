@@ -1,6 +1,13 @@
 @extends('layouts.default')
 
 @section('content')
+	
+	@if(session()->has('message'))
+		<div class="alert alert-success text-center">
+		    {{ session()->get('message') }}
+		</div>
+	@endif
+
 	<ul id="listing-index-ul">
 		{{-- List each listing and basic information --}}
 		@foreach($listings as $listing)

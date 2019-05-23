@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             'phone' => '0612345678',
             'password' => bcrypt('admin123'),
             'is_admin' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         DB::table('users')->insert([
@@ -38,6 +40,8 @@ class DatabaseSeeder extends Seeder
             'zipcode' => '9695 EH',
             'email' => 'dennis@dennis.nl',
             'password' => bcrypt('admin123'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         DB::table('vehicles')->insert([
@@ -71,12 +75,16 @@ class DatabaseSeeder extends Seeder
             'starting_price' => 210000,
             'user_id' => 1,
             'vehicle_id' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         DB::table('vehicles')->insert([
             'make' => 'Audi',
             'model' => 'RS6',
             'state' => 'N',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         DB::table('listings')->insert([
@@ -86,6 +94,8 @@ class DatabaseSeeder extends Seeder
             'starting_price' => 150000,
             'user_id' => 2,
             'vehicle_id' => 2,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

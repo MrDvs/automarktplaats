@@ -9,7 +9,7 @@
 
 		<div class="carousel-container">
 
-			<div id="listingImg" class="carousel slide" data-ride="carousel"> 
+			<div id="listingImg" class="carousel slide" data-ride="carousel">
 			  <ol class="carousel-indicators">
 			    <li data-target="#listingImg" data-slide-to="0" class="active"></li>
 			    {{-- <li data-target="#listingImg" data-slide-to="1"></li>
@@ -69,14 +69,18 @@
 		<hr>
 		{{-- {{$listing['user']}} --}}
 		<h5>Naam: {{$listing['user']->first_name ?? ""}} {{$listing['user']->suffix_name ?? ""}} {{$listing['user']->last_name ?? ""}}</h5>
-		<h5>Email: <a href="mailto:{{$listing['user']->email}}">{{$listing['user']->email}}</a></h5>	
+		<h5>Email: <a href="mailto:{{$listing['user']->email}}">{{$listing['user']->email}}</a></h5>
 		<h5>Telefoon: <a href="tel:{{$listing['user']->phone}}">{{$listing['user']->phone}}</a></h5>
 		<h5>Adres: {{$listing['user']->street}} {{$listing['user']->street_number}} {{$listing['user']->street_suffix ?? ""}}, {{$listing['user']->zipcode}} {{$listing['user']->city}}</h5>
 		{{-- <div class="gmap" style="max-width: 500px; max-height: 500px;">
 			<iframe width="100%" height="100%" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" src="https://maps.google.nl/maps?q={{$listing['user']->city}}&output=embed"></iframe>
 		</div> --}}
-	
-	</div>
 
+	</div>
+	<form action="{{url('/listing/'.$listing['id'])}}" method="POST">
+		@csrf
+		@method('DELETE')
+		<button type="submit" class="btn btn-danger">Verwijderen</button>
+	</form>
 	{{ print_r($listing) }}
 @stop

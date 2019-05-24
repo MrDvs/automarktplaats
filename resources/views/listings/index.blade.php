@@ -1,10 +1,15 @@
 @extends('layouts.default')
 
 @section('content')
-	
-	@if(session()->has('message'))
+
+	@if(session()->has('succes-message'))
 		<div class="alert alert-success text-center">
-		    {{ session()->get('message') }}
+		    {{ session()->get('succes-message') }}
+		</div>
+	@endif
+	@if(session()->has('error-message'))
+		<div class="alert alert-danger text-center">
+		    {{ session()->get('error-message') }}
 		</div>
 	@endif
 
@@ -34,7 +39,7 @@
 					</div>
 
 					<div class="col-md-7 listing-col">
-					
+
 						<div class="description">
 							<h5>Beschrijving: {{$listing['description']}}</h5>
 						</div>

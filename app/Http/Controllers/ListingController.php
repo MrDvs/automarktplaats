@@ -37,7 +37,7 @@ class ListingController extends Controller
     public function create()
     {
         // Haalt de RDW app token uit de .env file voor de api call
-        $RDW_APP_TOKEN = env('RDW_APP_TOKEN');  
+        $RDW_APP_TOKEN = env('RDW_APP_TOKEN');
         return view('listings.create', ['RDW_APP_TOKEN' => $RDW_APP_TOKEN]);
     }
 
@@ -100,7 +100,7 @@ class ListingController extends Controller
             case 'U':
                 $listing[0]['vehicle']->state = 'Gebruikt';
                 break;
-            
+
             case 'N':
                 $listing[0]['vehicle']->state = 'Nieuw';
                 break;
@@ -112,7 +112,7 @@ class ListingController extends Controller
             case 'A':
                 $listing[0]['vehicle']->transmission = 'Automaat';
                 break;
-            
+
             case 'H':
                 $listing[0]['vehicle']->transmission = 'Handgeschakeld';
                 break;
@@ -159,7 +159,7 @@ class ListingController extends Controller
         $listing->description = request('description');
         $listing->save();
 
-        return redirect('listing/')->with('message', 'Je advertentie is succesvol aangepast!');
+        return redirect('listing/')->with('succes-message', 'Je advertentie is succesvol aangepast!');
     }
 
     /**
@@ -170,6 +170,7 @@ class ListingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        listing::find($id)->delete();
+        return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
     }
 }

@@ -64,6 +64,44 @@
 
 	</div>
 
+	<div class="row">
+
+		<div class="col-md-4">
+			<h5>Merk: {{$listing['vehicle']->make}}</h5>
+			<h5>Model: {{$listing['vehicle']->model}}</h5>
+			<h5>Km stand: {{$listing['vehicle']->mileage}} km</h5>
+			<h5>Kenteken: {{$listing['vehicle']->license_plate}}</h5>
+			<h5>Bouwjaar: {{$listing['vehicle']->year}}</h5>
+			<h5>Kleur: {{$listing['vehicle']->color}}</h5>
+			<h5>Staat: {{$listing['vehicle']->state}}</h5>
+		</div>
+
+		<div class="col-md-4">
+			<h5>Caroserie: {{$listing['vehicle']->body_type}}</h5>
+			<h5>APK vervaldatum: {{$listing['vehicle']->apk_expiration}}</h5>
+			<h5>Versnellingsbak: {{$listing['vehicle']->transmission}}</h5>
+			<h5>Versnellingen: {{$listing['vehicle']->gears}}</h5>
+			<h5>Motor inhoud: {{$listing['vehicle']->engine_capicity}} cc</h5>
+			<h5>Aantal cilinders: {{$listing['vehicle']->cylinders}}</h5>
+			<h5>Leeg gewicht: {{$listing['vehicle']->empty_weight}}</h5>
+		</div>
+
+		<div class="col-md-4">
+			<h5>Aandrijving: {{$listing['vehicle']->drive}}</h5>
+			<h5>Brandstof: {{$listing['vehicle']->fuel_type}}</h5>
+			<h5>Aantal deuren: {{$listing['vehicle']->doors}}</h5>
+			<h5>Aantal zitplaatsen: {{$listing['vehicle']->seats}}</h5>
+			<h5>Vermogen: {{$listing['vehicle']->power}} PK</h5>
+		</div>
+
+	</div>
+
+	<div class="listing-description">
+		<h4>Beschrijving</h4>
+		<hr>
+		<h5>{{$listing->description}}</h5>
+	</div>
+
 	<div class="seller-information">
 		<h4>Verkoper informatie</h4>
 		<hr>
@@ -82,5 +120,4 @@
 		@method('DELETE')
 		<button type="submit" class="btn btn-danger">Verwijderen</button>
 	</form>
-	{{ print_r($listing) }}
 @stop

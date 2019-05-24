@@ -170,7 +170,13 @@ class ListingController extends Controller
      */
     public function destroy($id)
     {
-        listing::find($id)->delete();
-        return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
+        $listing = listing::find($id);
+
+        if ($listing['user_id'] == Auth::id()) {
+            // $listing)->delete();
+            return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
+        } else {
+            echo "Das machen sie eswas nicht machen meiner soon";
+        }
     }
 }

@@ -173,7 +173,7 @@ class ListingController extends Controller
         $listing = listing::find($id);
 
         if ($listing['user_id'] == Auth::id()) {
-            // $listing)->delete();
+            $listing->delete();
             return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
         } else {
             echo "Das machen sie eswas nicht machen meiner soon";

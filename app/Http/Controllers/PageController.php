@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\vehicle;
+use \App\listing;
 
 class PageController extends Controller
 {
@@ -14,8 +15,10 @@ class PageController extends Controller
      */
     public function index()
     {
-        $vehicles = Vehicle::all();
+        $listings = listing::with('vehicle')->get();
+        $makes = vehicle::select('make')->distinct()->get();
+        $models = vehicle::select('model')->distinct()->get();
         
-        return view('index', ['vehicles' => $vehicles]);
+        return view('index', ['listings' => $listings, 'makes' => $makes, 'models' => $models]);
     }
 }

@@ -15,6 +15,12 @@ class CreateBidsTable extends Migration
     {
         Schema::create('bids', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('user_id')->index();
+            $table->integer('listing_id')->index();
+
+            $table->decimal('amount', 9, 2);
+
             $table->timestamps();
         });
     }

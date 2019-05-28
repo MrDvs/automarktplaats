@@ -28,7 +28,7 @@ span.bold{
 }
 
 .listing-preview-img img {
-	max-width: 400px;
+	max-width: 100%;
 }
 
 @media (max-width: 769px) {
@@ -44,10 +44,6 @@ span.bold{
 	
 	.listing-preview-img {
 		margin-bottom: 1vh;
-	}
-
-	.listing-preview-img img {
-		max-width: 100%;
 	}
 
 }
@@ -95,5 +91,5 @@ Profile Index
 	.col-sm-12, .col-sm-11, .col-sm-10, .col-sm-9, .col-sm-8, .col-sm-7, .col-sm-6, .col-sm-5, .col-sm-4, .col-sm-3, .col-sm-2, .col-sm-1 {
 		padding: 0 !important;
 	}
-	
+
 }

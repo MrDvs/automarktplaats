@@ -15,4 +15,9 @@ class listing extends Model
 	{
 		return $this->belongsTo('App\User');
 	}
+
+	public function bids()
+	{
+		return $this->hasMany('App\Bid');
+	}
 }

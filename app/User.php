@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\listing');
     }
+
+    public function bids()
+    {
+        return $this->hasMany('App\Bid');
+    }
 }

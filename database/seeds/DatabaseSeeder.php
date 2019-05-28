@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'admin',
             'first_name' => 'Meneer',
-            'suffix_name' => 'de',
-            'last_name' => 'admin',
+            // 'suffix_name' => 'de',
+            'last_name' => 'de Admin',
             'city' => 'Stellendam',
             'street' => 'Tiendeweg',
             'street_number' => '99',
@@ -32,8 +32,8 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Dennis van Schie',
             'first_name' => 'Dennis',
-            'suffix_name' => 'van',
-            'last_name' => 'Schie',
+            // 'suffix_name' => 'van',
+            'last_name' => 'van Schie',
             'city' => 'Bellingwolde',
             'street' => 'Nieuwe Weg',
             'street_number' => '192',

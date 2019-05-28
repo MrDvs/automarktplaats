@@ -22,4 +22,7 @@ Route::get('/', 'PageController@index')->name('index');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/profiel', 'ProfileController@index')->name('profiel');
+Route::put('/profiel/{id}', 'ProfileController@update');
+
 

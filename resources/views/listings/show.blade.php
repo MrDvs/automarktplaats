@@ -100,6 +100,7 @@
 		<h4>Beschrijving</h4>
 		<hr>
 		<h5>{{$listing->description}}</h5>
+		<hr>
 	</div>
 
 	<div class="seller-information">

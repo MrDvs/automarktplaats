@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use \App\listing;
 use \App\vehicle;
+use \App\Image;
 
 
 
@@ -25,7 +26,7 @@ class ListingController extends Controller
     public function index()
     {
         // Haal alle listings op uit de database
-        $listings = listing::with('vehicle')->get();
+        $listings = listing::with('vehicle', 'Image')->get();
         return view('listings.index', ['listings' => $listings]);
     }
 
@@ -70,19 +71,31 @@ class ListingController extends Controller
         $vehicle->doors = request('door');
         $vehicle->seats = request('seat');
         $vehicle->power = request('power');
-
         $vehicle->save();
+
+        $images = new Image();
+        $images->img_1 = substr($request->mainImage->store('public'), 6);
+
+
+        // ====================================== FIX DIT ===========================================
+        // for ($i=0; $i < count(request('extraImages')); $i++) {
+        //     $counter = $i + 2; 
+        //     $images->img_.''.$counter = substr($request->extraImages[$i]->store('public'), 6);
+        // }
+        // ==========================================================================================
+
+        $images->save();
 
         $listing = new listing();
         $listing->user_id = Auth::id();
         $listing->vehicle_id = $vehicle->id;
+        $listing->image_id = $images->id;
         $listing->title = request('title');
         $listing->description = request('description');
         $listing->starting_price = request('price');
         $listing->save();
 
-        return redirect('listing/'.$listing->id);
-
+        // return redirect('listing/'.$listing->id);
 
     }
 
@@ -94,7 +107,7 @@ class ListingController extends Controller
      */
     public function show($id)
     {
-        $listing = listing::where('id', $id)->with('vehicle', 'user')->get();
+        $listing = listing::where('id', $id)->with('vehicle', 'user', 'Image')->get();
 
         switch ($listing[0]['vehicle']->state) {
             case 'U':

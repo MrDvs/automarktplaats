@@ -69,12 +69,18 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('listings')->insert([
-            'img_path' => 'img/audir8.jpg',
             'title' => 'Audi R8 V10 Plus te koop',
             'description' => 'Nette Audi, altijd binnen gestaan',
             'starting_price' => 210000,
             'user_id' => 1,
             'vehicle_id' => 1,
+            'image_id' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        DB::table('images')->insert([
+            'img_1' => 'audir8.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -88,12 +94,18 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('listings')->insert([
-            'img_path' => 'img/audirs6.jpg',
             'title' => 'Audi RS6 V8 Performance te koop',
             'description' => 'Nette Audi, altijd buiten gestaan',
             'starting_price' => 150000,
             'user_id' => 2,
             'vehicle_id' => 2,
+            'image_id' => 2,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        DB::table('images')->insert([
+            'img_1' => 'audirs6.jpg',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

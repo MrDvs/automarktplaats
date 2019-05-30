@@ -2,6 +2,8 @@
 
 @section('content')
 
+	{{print_r($listing)}}
+	
 	<h1 id="title">{{ $listing->title }}</h1>
 	<h2>{{$listing['vehicle']->make}} {{$listing['vehicle']->model}}</h2>
 
@@ -17,7 +19,7 @@
 			  </ol>
 			  <div class="carousel-inner">
 			    <div class="carousel-item active">
-			      <img class="d-block w-100" src="{{ asset($listing->img_path) }}" alt="First slide">
+			      <img class="d-block w-100" src="{{ asset('storage/'.$listing['Image']->img_1) }}" alt="First slide">
 			    </div>
 			    {{-- <div class="carousel-item">
 			      <img class="d-block w-100" src="{{ asset('img/audir8.jpg') }}" alt="Second slide">

@@ -16,6 +16,16 @@
 					<hr>
 
 					<div class="form-group">
+						<label for="mainimgInput">Hoofd afbeelding</label>
+						<input type="file" id="mainimgInput" class="form-control-file" name="mainImage" required>
+					</div>
+
+					<div class="form-group">
+						<label for="imgInput">Kies maximaal 5 afbeeldingen</label>
+						<input type="file" id="imgInput" class="form-control-file" name="extraImages[]" multiple>
+					</div>
+
+					<div class="form-group">
 						<label for="titleInput">Advertentie titel</label>
 						<input type="text" id="titleInput" class="form-control" name="title" {{-- onkeypress="charCount('#titleInput')" --}} placeholder="Titel" maxlength="191" required>
 						{{-- <span class="counter">0</span>/191 --}}

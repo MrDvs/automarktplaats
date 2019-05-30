@@ -6,7 +6,7 @@
 
 	<h1 class="text-center">Verkoop je auto!</h1>
 
-		<form action="{{ url('listing') }}" method="POST">
+		<form action="{{ url('listing') }}" method="POST" enctype="multipart/form-data">
 
 			{{-- De csrf token beschermd tegen cross-site request forgery --}}
 			{{ csrf_field() }}

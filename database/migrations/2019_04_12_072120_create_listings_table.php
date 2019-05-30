@@ -18,8 +18,8 @@ class CreateListingsTable extends Migration
 
             $table->integer('user_id')->index();
             $table->integer('vehicle_id')->index();
+            $table->integer('image_id')->index();
 
-            $table->string('img_path')->default('./img/default.png');
             $table->string('title');
             $table->text('description');
             $table->timestamp('expiration_date');

@@ -63,9 +63,9 @@
 		</div>
 
 	</div>
-
+	<hr>
 	<div class="row">
-
+		<h4>Specificaties</h4>
 		<div class="col-md-4">
 			<h5>Merk: {{$listing['vehicle']->make}}</h5>
 			<h5>Model: {{$listing['vehicle']->model}}</h5>
@@ -95,10 +95,10 @@
 		</div>
 
 	</div>
-
+	<hr>
 	<div class="listing-description">
 		<h4>Beschrijving</h4>
-		<hr>
+
 		<h5>{{$listing->description}}</h5>
 		<hr>
 	</div>

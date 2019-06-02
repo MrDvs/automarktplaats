@@ -32,7 +32,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="imgInput">Kies maximaal 5 afbeeldingen</label>
+						<label for="imgInput">Kies maximaal 5 extra afbeeldingen</label>
 						<input type="file" id="imgInput" class="form-control-file" name="extraImages[]" multiple>
 					</div>
 

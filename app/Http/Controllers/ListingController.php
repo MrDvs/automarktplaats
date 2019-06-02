@@ -26,7 +26,8 @@ class ListingController extends Controller
     public function index()
     {
         // Haal alle listings op uit de database
-        $listings = listing::with('vehicle', 'Image')->get();
+        $listings = listing::with('vehicle', 'images')->get();
+        // return $listings;
         return view('listings.index', ['listings' => $listings]);
     }
 

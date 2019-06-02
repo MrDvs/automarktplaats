@@ -33,7 +33,7 @@
 					<div class="col-md-5 listing-col">
 
 						<div class="listing-preview-img">
-							<img src="{{ asset('storage/'.$listing['Image']->img_1) }}" alt="{{$listing['vehicle']['make'].' '.$listing['vehicle']['model'] }}">
+							<img src="{{ asset('storage/'.$listing['images'][0]->img_path) }}" alt="{{$listing['vehicle']['make'].' '.$listing['vehicle']['model'] }}">
 						</div>
 
 					</div>

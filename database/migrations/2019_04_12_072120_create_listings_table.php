@@ -18,7 +18,6 @@ class CreateListingsTable extends Migration
 
             $table->integer('user_id')->index();
             $table->integer('vehicle_id')->index();
-            $table->integer('image_id')->index()->nullable();
 
             $table->string('title');
             $table->text('description');

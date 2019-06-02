@@ -2,7 +2,7 @@
 
 @section('content')
 
-	{{print_r($listing)}}
+	{{-- {{print_r($listing)}} --}}
 	
 	<h1 id="title">{{ $listing->title }}</h1>
 	<h2>{{$listing['vehicle']->make}} {{$listing['vehicle']->model}}</h2>
@@ -13,20 +13,28 @@
 
 			<div id="listingImg" class="carousel slide" data-ride="carousel">
 			  <ol class="carousel-indicators">
-			    <li data-target="#listingImg" data-slide-to="0" class="active"></li>
-			    {{-- <li data-target="#listingImg" data-slide-to="1"></li>
-			    <li data-target="#listingImg" data-slide-to="2"></li> --}}
+			  	<li data-target="#listingImg" data-slide-to="0" class="active"></li>
+			  	@foreach($listing['images'] as $key => $image)
+					@if(!$image['mainImage'])
+					    <li data-target="#listingImg" data-slide-to="{{$key}}"></li>
+					@endif
+				@endforeach
+			    
+			   
 			  </ol>
 			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img class="d-block w-100" src="{{ asset('storage/'.$listing['Image']->img_1) }}" alt="First slide">
-			    </div>
-			    {{-- <div class="carousel-item">
-			      <img class="d-block w-100" src="{{ asset('img/audir8.jpg') }}" alt="Second slide">
-			    </div>
-			    <div class="carousel-item">
-			      <img class="d-block w-100" src="{{ asset('img/audir8.jpg') }}" alt="Third slide">
-			    </div> --}}
+				@foreach($listing['images'] as $image)
+					@if($image['mainImage'])
+					    <div class="carousel-item active">
+					      <img class="d-block w-100" src="{{ asset('storage/'.$image->img_path) }}" alt="First slide">
+					    </div>
+					@else
+					    <div class="carousel-item">
+					      <img class="d-block w-100" src="{{ asset('storage/'.$image->img_path) }}" alt="Slide item">
+					    </div>
+					@endif
+				@endforeach
+
 			  </div>
 			  <a class="carousel-control-prev" href="#listingImg" role="button" data-slide="prev">
 			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>

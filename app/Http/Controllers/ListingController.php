@@ -50,10 +50,16 @@ class ListingController extends Controller
      */
     public function store(Request $request)
     {
+
+        // Hier vind de validatie van alle form fields plaats.
+        request()->validate([
+            'mainImage' => 'required|image|max:2048',
+            'extraImages.*' => 'required|image|max:2048',
+        ]);
+
         $vehicle = new vehicle();
         $vehicle->make = request('make');
         $vehicle->model = request('model');
-
         $vehicle->mileage = request('mileage');
         $vehicle->license_plate = request('licenseplate');
         $vehicle->year = request('year');
@@ -73,29 +79,29 @@ class ListingController extends Controller
         $vehicle->power = request('power');
         $vehicle->save();
 
-        $images = new Image();
-        $images->img_1 = substr($request->mainImage->store('public'), 6);
-
-
-        // ====================================== FIX DIT ===========================================
-        // for ($i=0; $i < count(request('extraImages')); $i++) {
-        //     $counter = $i + 2; 
-        //     $images->img_.''.$counter = substr($request->extraImages[$i]->store('public'), 6);
-        // }
-        // ==========================================================================================
-
-        $images->save();
-
         $listing = new listing();
         $listing->user_id = Auth::id();
         $listing->vehicle_id = $vehicle->id;
-        $listing->image_id = $images->id;
         $listing->title = request('title');
         $listing->description = request('description');
         $listing->starting_price = request('price');
         $listing->save();
 
-        // return redirect('listing/'.$listing->id);
+        $images = new Image();
+        $images->listing_id = $listing->id;
+        $images->img_path = substr($request->mainImage->store('public'), 6);
+        $images->mainImage = 1;
+        $images->save();
+
+        foreach (request('extraImages') as $image) {
+            $images = new Image();
+            $images->listing_id = $listing->id;
+            $images->img_path = substr($image->store('public'), 6);
+            $images->save();
+        }
+        
+
+        return redirect('listing/'.$listing->id);
 
     }
 
@@ -107,7 +113,7 @@ class ListingController extends Controller
      */
     public function show($id)
     {
-        $listing = listing::where('id', $id)->with('vehicle', 'user', 'Image')->get();
+        $listing = listing::where('id', $id)->with('vehicle', 'user', 'images')->get();
 
         switch ($listing[0]['vehicle']->state) {
             case 'U':

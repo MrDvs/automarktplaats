@@ -8,6 +8,6 @@ class Image extends Model
 {
     public function listing()
     {
-    	return $this->hasOne('App\listing');
+    	return $this->belongsTo('App\listing');
     }
 }

@@ -74,13 +74,14 @@ class DatabaseSeeder extends Seeder
             'starting_price' => 210000,
             'user_id' => 1,
             'vehicle_id' => 1,
-            'image_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         DB::table('images')->insert([
-            'img_1' => 'audir8.jpg',
+            'listing_id' => 1,
+            'img_path' => 'audir8.jpg',
+            'mainImage' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -99,13 +100,14 @@ class DatabaseSeeder extends Seeder
             'starting_price' => 150000,
             'user_id' => 2,
             'vehicle_id' => 2,
-            'image_id' => 2,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         DB::table('images')->insert([
-            'img_1' => 'audirs6.jpg',
+            'listing_id' => 2,
+            'img_path' => 'audirs6.jpg',
+            'mainImage' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

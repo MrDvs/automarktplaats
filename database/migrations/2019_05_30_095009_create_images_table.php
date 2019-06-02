@@ -16,12 +16,10 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('img_1')->default('./img/default.png');
-            $table->string('img_2')->nullable();
-            $table->string('img_3')->nullable();
-            $table->string('img_4')->nullable();
-            $table->string('img_5')->nullable();
-            $table->string('img_6')->nullable();
+            $table->integer('listing_id')->index();
+
+            $table->string('img_path');
+            $table->integer('mainImage')->default(0);
 
             $table->timestamps();
         });

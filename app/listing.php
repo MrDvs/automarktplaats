@@ -16,9 +16,9 @@ class listing extends Model
 		return $this->belongsTo('App\User');
 	}
 
-	public function image()
+	public function images()
 	{
-		return $this->belongsTo('App\Image');
+		return $this->hasMany('App\Image');
 	}
 
 	public function bids()

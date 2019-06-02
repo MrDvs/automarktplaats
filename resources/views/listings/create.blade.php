@@ -6,6 +6,17 @@
 
 	<h1 class="text-center">Verkoop je auto!</h1>
 
+		{{-- Als er errors zijn, worden deze hier weergeven. Dit zijn validatie errors. --}}
+		@if ($errors->any())
+			<div class="alert alert-danger text-center">
+				<ul>
+					@foreach ($errors->all() as $error)
+						<h5>{{ $error }}</h5>
+					@endforeach
+				</ul>
+			</div>
+		@endif
+
 		<form action="{{ url('listing') }}" method="POST" enctype="multipart/form-data">
 
 			{{-- De csrf token beschermd tegen cross-site request forgery --}}
@@ -17,7 +28,7 @@
 
 					<div class="form-group">
 						<label for="mainimgInput">Hoofd afbeelding</label>
-						<input type="file" id="mainimgInput" class="form-control-file" name="mainImage" required>
+						<input type="file" id="mainimgInput" class="form-control-file" name="mainImage" >
 					</div>
 
 					<div class="form-group">
@@ -27,19 +38,19 @@
 
 					<div class="form-group">
 						<label for="titleInput">Advertentie titel</label>
-						<input type="text" id="titleInput" class="form-control" name="title" {{-- onkeypress="charCount('#titleInput')" --}} placeholder="Titel" maxlength="191" required>
+						<input type="text" id="titleInput" class="form-control" name="title" {{-- onkeypress="charCount('#titleInput')" --}} placeholder="Titel" maxlength="191" >
 						{{-- <span class="counter">0</span>/191 --}}
 					</div>
 
 					<div class="form-group">
 						<label for="descriptionInput">Advertentie beschrijving</label>
 						{{-- <input type="text" id="descriptionInput" class="form-control" name="description" placeholder="Beschrijving" maxlength="191" required> --}}
-						<textarea name="description" id="descriptionInput" class="form-control" placeholder="Beschrijving" style="width: 100%" required></textarea>
+						<textarea name="description" id="descriptionInput" class="form-control" placeholder="Beschrijving" style="width: 100%" ></textarea>
 					</div>
 
 					<div class="form-group">
 						<label for="priceInput">Begin prijs</label>
-						<input type="number" id="priceInput" class="form-control" name="price" required>
+						<input type="number" id="priceInput" class="form-control" name="price" >
 					</div>
 
 				</div>
@@ -56,33 +67,33 @@
 
 					<div class="form-group">
 						<label for="makeInput">Merk</label>
-						<input type="text" id="makeInput" class="form-control" name="make" placeholder="merk" required>
+						<input type="text" id="makeInput" class="form-control" name="make" placeholder="merk" >
 					</div>
 
 					<div class="form-group">
 						<label for="modelInput">Model</label>
-						<input type="text" id="modelInput" class="form-control" name="model" placeholder="model" required>
+						<input type="text" id="modelInput" class="form-control" name="model" placeholder="model" >
 					</div>
 					<hr>
 
 					<div class="form-group">
 						<label for="mileageInput">Kilometer stand</label>
-						<input type="number" id="mileageInput" class="form-control" name="mileage" placeholder="Kilometer stand" required>
+						<input type="number" id="mileageInput" class="form-control" name="mileage" placeholder="Kilometer stand" >
 					</div>
 
 					<div class="form-group">
 						<label for="licenseplateInput">Kenteken</label>
-						<input type="text" id="licenseplateInput" class="form-control" name="licenseplate" placeholder="Kenteken" required>
+						<input type="text" id="licenseplateInput" class="form-control" name="licenseplate" placeholder="Kenteken" >
 					</div>
 
 					<div class="form-group">
 						<label for="yearInput">Bouwjaar</label>
-						<input type="text" id="yearInput" class="form-control" name="year" placeholder="Bouwjaar" required>
+						<input type="text" id="yearInput" class="form-control" name="year" placeholder="Bouwjaar">
 					</div>
 
 					<div class="form-group">
 						<label for="colorInput">Kleur</label>
-						<input type="text" id="colorInput" class="form-control" name="color" placeholder="Kleur" required>
+						<input type="text" id="colorInput" class="form-control" name="color" placeholder="Kleur">
 					</div>
 
 					<div class="form-group">
@@ -95,22 +106,22 @@
 
 					<div class="form-group">
 						<label for="bodyInput">Carroserie</label>
-						<input type="text" id="bodyInput" class="form-control" name="body" placeholder="Carroserie" required>
+						<input type="text" id="bodyInput" class="form-control" name="body" placeholder="Carroserie">
 					</div>
 
 					<div class="form-group">
 						<label for="apkInput">APK vervaldatum</label>
-						<input type="text" id="apkInput" class="form-control" name="apk" placeholder="APK vervaldatum" required>
+						<input type="text" id="apkInput" class="form-control" name="apk" placeholder="APK vervaldatum">
 					</div>
 
 					<div class="form-group">
 						<label for="transmissionInput">Type versnellingsbak</label>
-						<input type="text" id="transmissionInput" class="form-control" name="transmission" placeholder="Type versnellingsbak" required>
+						<input type="text" id="transmissionInput" class="form-control" name="transmission" placeholder="Type versnellingsbak">
 					</div>
 
 					<div class="form-group">
 						<label for="gearInput">Aantal versnellingen</label>
-						<input type="number" id="gearInput" class="form-control" name="gear" placeholder="Aantal versnellingen" required>
+						<input type="number" id="gearInput" class="form-control" name="gear" placeholder="Aantal versnellingen">
 					</div>
 
 					<div class="form-group">
@@ -120,7 +131,7 @@
 
 					<div class="form-group">
 						<label for="cylinderInput">Aantal cilinders</label>
-						<input type="number" id="cylinderInput" class="form-control" name="cylinder" placeholder="Aantal cilinders" required>
+						<input type="number" id="cylinderInput" class="form-control" name="cylinder" placeholder="Aantal cilinders">
 					</div>
 
 					<div class="form-group">

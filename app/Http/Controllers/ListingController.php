@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Storage;
 use \App\listing;
 use \App\vehicle;
 use \App\Image;
@@ -100,7 +101,7 @@ class ListingController extends Controller
             $images->img_path = substr($image->store('public'), 6);
             $images->save();
         }
-        
+
 
         return redirect('listing/'.$listing->id);
 
@@ -190,9 +191,15 @@ class ListingController extends Controller
      */
     public function destroy($id)
     {
-        $listing = listing::find($id);
+        $listing = listing::where('id', $id)->with('images')->get();
 
-        if ($listing['user_id'] == Auth::id()) {
+        if ($listing[0]['user_id'] == Auth::id()) {
+
+            foreach ($listing[0]['images'] as $image) {
+                echo $image->img_path."<br><br>";
+                Storage::delete('/public/'.$image->img_path);
+            }
+
             $listing->delete();
             return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
         } else {

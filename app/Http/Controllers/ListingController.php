@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Intervention;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Storage;
 use \App\listing;
 use \App\vehicle;
 use \App\Image;
+use Storage;
 
 
 
@@ -27,7 +28,7 @@ class ListingController extends Controller
     public function index()
     {
         // Haal alle listings op uit de database
-        $listings = listing::with('vehicle', 'images')->get();
+        $listings = listing::with('vehicle', 'images')->paginate(10);
         // return $listings;
         return view('listings.index', ['listings' => $listings]);
     }
@@ -91,19 +92,34 @@ class ListingController extends Controller
 
         $images = new Image();
         $images->listing_id = $listing->id;
-        $images->img_path = substr($request->mainImage->store('public'), 6);
+        $images->img_path = substr($request->mainImage->store('public'), 7);
         $images->mainImage = 1;
         $images->save();
+
+        // Hier haalt intervention de image weer op, zorgt er voor dat de afbeelding het juiste formaat heeft en slaat het op als een JPG met 80% van zijn orginele kwaliteit. Daarnaast word de orginele afbeelding verwijderd.
+        $img = Intervention::make(Storage::disk('public')->get($images->img_path))
+            ->fit(664, 373)
+            ->encode('jpg', 80);
+        Storage::disk('public')->delete($images->img_path);
+        Storage::disk('public')->put($images->img_path, $img);
 
         foreach (request('extraImages') as $image) {
             $images = new Image();
             $images->listing_id = $listing->id;
             $images->img_path = substr($image->store('public'), 6);
             $images->save();
+
+            // Hier haalt intervention de image weer op, zorgt er voor dat de afbeelding het juiste formaat heeft en slaat het op als een JPG met 80% van zijn orginele kwaliteit. Daarnaast word de orginele afbeelding verwijderd.
+            $img = Intervention::make(Storage::disk('public')->get($images->img_path))
+                ->fit(664, 373)
+                ->encode('jpg', 80);
+            echo $img->width();
+            Storage::disk('public')->delete($images->img_path);
+            Storage::disk('public')->put($images->img_path, $img);
         }
 
 
-        return redirect('listing/'.$listing->id);
+        // return redirect('listing/'.$listing->id);
 
     }
 

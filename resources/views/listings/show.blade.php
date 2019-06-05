@@ -7,11 +7,11 @@
 	<h1 id="title">{{ $listing->title }}</h1>
 	<h2>{{$listing['vehicle']->make}} {{$listing['vehicle']->model}}</h2>
 
-	<div style="display: inline-block;">
+	<div class="row">
 
-		<div class="carousel-container">
+		<div class="carousel-container col-md-8">
 
-			<div id="listingImg" class="carousel slide" data-ride="carousel">
+			<div id="listingImg" class="carousel slide" data-ride="false" >
 			  <ol class="carousel-indicators">
 			  	<li data-target="#listingImg" data-slide-to="0" class="active"></li>
 			  	@foreach($listing['images'] as $key => $image)
@@ -48,7 +48,7 @@
 
 		</div>
 
-		<div class="vehicle-information">
+		<div class="vehicle-information col-md-4">
 			<h4 style="font-weight: bold;">Voertuig informatie:</h4>
 			<hr>
 			<h5>Merk: {{$listing['vehicle']->make}}</h5>

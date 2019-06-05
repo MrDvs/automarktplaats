@@ -57,8 +57,7 @@ Listing show
 
 .carousel-container {
 	border: 1px solid blue;
-	float: left; 
-	width: 60%;
+	padding: 0;
 }
 
 #listingImg {
@@ -67,8 +66,6 @@ Listing show
 
 .vehicle-information {
 	border: 1px solid red;
-	float: right;
-	width: 40%;
 	padding: 10px;
 }
 
@@ -77,8 +74,7 @@ Listing show
 	.carousel-container,
 	.vehicle-information {
 		width: 100%;
-		float: none;
-		padding: none;
+		text-align: center;
 	}
 
 }

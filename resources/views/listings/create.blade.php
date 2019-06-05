@@ -28,12 +28,14 @@
 
 					<div class="form-group">
 						<label for="mainimgInput">Hoofd afbeelding</label>
-						<input type="file" id="mainimgInput" class="form-control-file" name="mainImage" >
+						<input type="file" id="mainimgInput" class="form-control-file" name="mainImage" aria-describedby="mainimgHelp">
+						<small id="mainimgHelp" class="form-text text-muted">Tip: upload horizontaal genomen foto's voor het beste resultaat</small>
 					</div>
 
 					<div class="form-group">
 						<label for="imgInput">Kies maximaal 5 extra afbeeldingen</label>
-						<input type="file" id="imgInput" class="form-control-file" name="extraImages[]" multiple>
+						<input type="file" id="imgInput" class="form-control-file" name="extraImages[]" aria-describedby="imgHelp" multiple>
+						<small id="imgHelp" class="form-text text-muted">Tip: upload horizontaal genomen foto's voor het beste resultaat</small>
 					</div>
 
 					<div class="form-group">

@@ -21,4 +21,9 @@ class PageController extends Controller
         
         return view('index', ['listings' => $listings, 'makes' => $makes, 'models' => $models]);
     }
+
+    public function test()
+    {
+        return view('listings.test');
+    }
 }

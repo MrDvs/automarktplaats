@@ -56,4 +56,7 @@
 			</li>
 		@endforeach
 	</ul>
+
+	{{$listings->links()}}
+	
 @endsection

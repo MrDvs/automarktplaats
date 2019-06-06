@@ -65,6 +65,10 @@
 		</div>
 
 	</div>
+	<br>
+	<button class="btn btn-primary">
+		Toevoegen aan favorieten
+	</button>
 	<hr>
 	<h4>Specificaties</h4>
 	<div class="row">

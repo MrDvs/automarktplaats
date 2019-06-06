@@ -25,4 +25,9 @@ class listing extends Model
 	{
 		return $this->hasMany('App\Bid');
 	}
+
+	public function favorites()
+	{
+		$this->hasMany('App\favorite');
+	}
 }

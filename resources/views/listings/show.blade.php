@@ -7,7 +7,7 @@
 	<h1 id="title">{{ $listing->title }}</h1>
 	<h2>{{$listing['vehicle']->make}} {{$listing['vehicle']->model}}</h2>
 
-	<div class="row">
+	<div class="row" style="max-height: 430px;">
 
 		<div class="carousel-container col-md-8">
 
@@ -49,33 +49,26 @@
 		</div>
 
 		<div class="vehicle-information col-md-4">
-			<h4 style="font-weight: bold;">Voertuig informatie:</h4>
+			<h4 style="font-weight: bold;">Beknopte informatie:</h4>
 			<hr>
-			<h5>Merk: {{$listing['vehicle']->make}}</h5>
-			<h5>Model: {{$listing['vehicle']->model}}</h5>
-			<h5>Km stand: {{$listing['vehicle']->mileage}} km</h5>
+
 			<h5>Kenteken: {{$listing['vehicle']->license_plate}}</h5>
 			<h5>Bouwjaar: {{$listing['vehicle']->year}}</h5>
 			<h5>Kleur: {{$listing['vehicle']->color}}</h5>
 			<h5>Staat: {{$listing['vehicle']->state}}</h5>
-			<h5>Caroserie: {{$listing['vehicle']->body_type}}</h5>
-			<h5>APK vervaldatum: {{$listing['vehicle']->apk_expiration}}</h5>
+
 			<h5>Versnellingsbak: {{$listing['vehicle']->transmission}}</h5>
-			<h5>Versnellingen: {{$listing['vehicle']->gears}}</h5>
-			<h5>Motor inhoud: {{$listing['vehicle']->engine_capicity}} cc</h5>
-			<h5>Aantal cilinders: {{$listing['vehicle']->cylinders}}</h5>
-			<h5>Leeg gewicht: {{$listing['vehicle']->empty_weight}}</h5>
-			<h5>Aandrijving: {{$listing['vehicle']->drive}}</h5>
+
 			<h5>Brandstof: {{$listing['vehicle']->fuel_type}}</h5>
-			<h5>Aantal deuren: {{$listing['vehicle']->doors}}</h5>
-			<h5>Aantal zitplaatsen: {{$listing['vehicle']->seats}}</h5>
+
 			<h5>Vermogen: {{$listing['vehicle']->power}} PK</h5>
 		</div>
 
 	</div>
 	<hr>
+	<h4>Specificaties</h4>
 	<div class="row">
-		<h4>Specificaties</h4>
+		
 		<div class="col-md-4">
 			<h5>Merk: {{$listing['vehicle']->make}}</h5>
 			<h5>Model: {{$listing['vehicle']->model}}</h5>
@@ -115,7 +108,6 @@
 
 	<div class="seller-information">
 		<h4>Verkoper informatie</h4>
-		<hr>
 		{{-- {{$listing['user']}} --}}
 		<h5>Naam: {{$listing['user']->first_name ?? ""}} {{$listing['user']->suffix_name ?? ""}} {{$listing['user']->last_name ?? ""}}</h5>
 		<h5>Email: <a href="mailto:{{$listing['user']->email}}">{{$listing['user']->email}}</a></h5>
@@ -131,4 +123,5 @@
 		@method('DELETE')
 		<button type="submit" class="btn btn-danger">Verwijderen</button>
 	</form>
+
 @stop

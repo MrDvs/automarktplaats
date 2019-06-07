@@ -133,16 +133,21 @@ class ListingController extends Controller
     public function show($id)
     {
         $listing = listing::where('id', $id)->with('vehicle', 'user', 'images')->get();
-        $favorite = 0;
-        if (Auth::check()) {
-            $favorite = favorite::where([
-                ['user_id', Auth::id()],
-                ['listing_id', $listing[0]['id']]
-            ])->get();
-            if(count($favorite)) {
-                $favorite = 1;
-            }
+        
+        
+
+        $favorite = favorite::where([
+            ['user_id', Auth::id()],
+            ['listing_id', $listing[0]['id']]
+        ])->get();
+
+        if(count($favorite)) {
+            $favorite = 1;
+        } else {
+            $favorite = 0;
         }
+
+        
 
         switch ($listing[0]['vehicle']->state) {
             case 'U':

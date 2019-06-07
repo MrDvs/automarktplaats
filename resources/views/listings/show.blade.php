@@ -66,17 +66,32 @@
 
 	</div>
 	<br>
-	@if($favorite)
-		<div class="favorite">
-			<button class="btn btn-primary">
-				Verwijderen uit favorieten <i class="fas fa-star"></i>
-			</button>
-		</div>
-	@else
-		<button class="btn btn-primary">
+
+	<div class="favorite-active" style="display: none;">
+		<button class="btn btn-primary" onclick="removeFavorite({{Auth::id()}}, {{$listing['id']}})">
+			Verwijderen uit favorieten <i class="fas fa-star"></i>
+		</button>
+	</div>
+
+	<div class="favorite-inactive" style="display: none;">
+		<button class="btn btn-primary" onclick="addFavorite({{Auth::id()}}, {{$listing['id']}})">
 			Toevoegen aan favorieten <i class="far fa-star"></i>
 		</button>
+	</div>
+
+	@if(Auth::check())
+		{{$favorite}}
+		@if($favorite)
+			<script>
+				$('.favorite-active').css('display', 'block');
+			</script>
+		@else
+			<script>
+				$('.favorite-inactive').css('display', 'block');
+			</script>
+		@endif
 	@endif
+
 	<hr>
 	<h4>Specificaties</h4>
 	<div class="row">
@@ -137,23 +152,33 @@
 	</form>
 
 	<script>
-		$.ajax({
-		    url: "",
-		    type: "GET",
-		    data: {
-		      "" :
-		    }
-		  }).done(function(data) {
-		    console.log(data)
-		    console.log(data.length)
-		    if (data.length > 1) {
-		    	if (data[0]["brandstof_omschrijving"] == "Elektriciteit" || data[1]["brandstof_omschrijving"] == "Elektriciteit") {
-		    		$('#fuelInput').val("Hybride")
-		    	}
-		    } else {
-		    	$('#fuelInput').val(data[0]["brandstof_omschrijving"])
-		    }
-		  });
+		function addFavorite(userId, listingId) {
+			$.ajax({
+			    url: "http://localhost/automarktplaats/public/addFavorite",
+			    type: "GET",
+			    data: {
+			    	"userId" : userId,
+			    	"listingId" : listingId
+			    }
+			}).done(function() {
+			    $('.favorite-active').css('display', 'block');
+			    $('.favorite-inactive').css('display', 'none');
+			});
+		}
+
+		function removeFavorite(userId, listingId) {
+			$.ajax({
+			    url: "http://localhost/automarktplaats/public/removeFavorite",
+			    type: "GET",
+			    data: {
+			    	"userId" : userId,
+			    	"listingId" : listingId
+			    }
+			}).done(function() {
+			    $('.favorite-active').css('display', 'none');
+			    $('.favorite-inactive').css('display', 'block');
+			});
+		}
 	</script>
 
 @stop

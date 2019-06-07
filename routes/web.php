@@ -18,10 +18,11 @@ Auth::routes();
 Route::resource('listing', 'ListingController');
 
 // Test route
-Route::get('test', 'PageController@test');
+Route::get('/test', 'PageController@test');
 
-// Ajax call
-Route::get('addFavorite', 'FavoriteController@store');
+// Ajax calls
+Route::get('/addFavorite', 'FavoriteController@store');
+Route::get('/removeFavorite', 'FavoriteController@destroy');
 
 // Main routes
 Route::get('/', 'PageController@index')->name('index');

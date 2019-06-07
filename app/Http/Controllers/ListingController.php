@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use \App\listing;
 use \App\vehicle;
+use \App\favorite;
 use \App\Image;
 use Storage;
 
@@ -132,6 +133,17 @@ class ListingController extends Controller
     public function show($id)
     {
         $listing = listing::where('id', $id)->with('vehicle', 'user', 'images')->get();
+        if (Auth::check()) {
+            $favorite = favorite::where([
+                ['user_id', Auth::id()],
+                ['listing_id', $listing[0]['id']]
+            ])->get();
+            if(count($favorite)) {
+                $favorite = 1;
+            } else {
+                $favorite = 0;
+            }
+        }
 
         switch ($listing[0]['vehicle']->state) {
             case 'U':
@@ -163,7 +175,7 @@ class ListingController extends Controller
 
         // Checked of de listing bestaat (als count() niet 0 is).
         if (count($listing)) {
-            return view('listings.show', ['listing' => $listing[0]]);
+            return view('listings.show', ['listing' => $listing[0], 'favorite' => $favorite]);
         } else {
             echo 'Deze listing bestaat niet <a href="'.route('listing.index').'">Ga terug</a>';
         }

@@ -3,7 +3,7 @@
 @section('content')
 
 	{{-- {{print_r($listing)}} --}}
-	
+
 	<h1 id="title">{{ $listing->title }}</h1>
 	<h2>{{$listing['vehicle']->make}} {{$listing['vehicle']->model}}</h2>
 
@@ -19,8 +19,8 @@
 					    <li data-target="#listingImg" data-slide-to="{{$key}}"></li>
 					@endif
 				@endforeach
-			    
-			   
+
+
 			  </ol>
 			  <div class="carousel-inner">
 				@foreach($listing['images'] as $image)
@@ -66,13 +66,19 @@
 
 	</div>
 	<br>
-	<button class="btn btn-primary">
-		Toevoegen aan favorieten
-	</button>
+	@if($favorite)
+		<button class="btn btn-primary">
+			Verwijderen uit favorieten <i class="fas fa-star"></i>
+		</button>
+	@else
+		<button class="btn btn-primary">
+			Toevoegen aan favorieten <i class="far fa-star"></i>
+		</button>
+	@endif
 	<hr>
 	<h4>Specificaties</h4>
 	<div class="row">
-		
+
 		<div class="col-md-4">
 			<h5>Merk: {{$listing['vehicle']->make}}</h5>
 			<h5>Model: {{$listing['vehicle']->model}}</h5>
@@ -127,5 +133,25 @@
 		@method('DELETE')
 		<button type="submit" class="btn btn-danger">Verwijderen</button>
 	</form>
+
+	<script>
+		$.ajax({
+		    url: "",
+		    type: "GET",
+		    data: {
+		      "" :
+		    }
+		  }).done(function(data) {
+		    console.log(data)
+		    console.log(data.length)
+		    if (data.length > 1) {
+		    	if (data[0]["brandstof_omschrijving"] == "Elektriciteit" || data[1]["brandstof_omschrijving"] == "Elektriciteit") {
+		    		$('#fuelInput').val("Hybride")
+		    	}
+		    } else {
+		    	$('#fuelInput').val(data[0]["brandstof_omschrijving"])
+		    }
+		  });
+	</script>
 
 @stop

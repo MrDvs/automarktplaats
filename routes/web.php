@@ -17,7 +17,11 @@ Auth::routes();
 // Resource route for the listings
 Route::resource('listing', 'ListingController');
 
+// Test route
 Route::get('test', 'PageController@test');
+
+// Ajax call
+// Route::
 
 // Main routes
 Route::get('/', 'PageController@index')->name('index');

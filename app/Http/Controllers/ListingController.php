@@ -133,6 +133,7 @@ class ListingController extends Controller
     public function show($id)
     {
         $listing = listing::where('id', $id)->with('vehicle', 'user', 'images')->get();
+        $favorite = 0;
         if (Auth::check()) {
             $favorite = favorite::where([
                 ['user_id', Auth::id()],
@@ -140,8 +141,6 @@ class ListingController extends Controller
             ])->get();
             if(count($favorite)) {
                 $favorite = 1;
-            } else {
-                $favorite = 0;
             }
         }
 

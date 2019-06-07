@@ -67,9 +67,11 @@
 	</div>
 	<br>
 	@if($favorite)
-		<button class="btn btn-primary">
-			Verwijderen uit favorieten <i class="fas fa-star"></i>
-		</button>
+		<div class="favorite">
+			<button class="btn btn-primary">
+				Verwijderen uit favorieten <i class="fas fa-star"></i>
+			</button>
+		</div>
 	@else
 		<button class="btn btn-primary">
 			Toevoegen aan favorieten <i class="far fa-star"></i>

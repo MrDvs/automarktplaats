@@ -21,7 +21,7 @@ Route::resource('listing', 'ListingController');
 Route::get('test', 'PageController@test');
 
 // Ajax call
-// Route::
+Route::get('addFavorite', 'FavoriteController@store');
 
 // Main routes
 Route::get('/', 'PageController@index')->name('index');

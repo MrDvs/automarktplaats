@@ -133,6 +133,15 @@
 		<hr>
 	</div>
 
+	<div class="bids">
+		@if (Auth::check())
+			<h5>Breng een bod uit: </h5>
+			<input type="text" placeholder="Bedrag">
+			<input type="button" class="btn btn-primary" value="Bied">
+		@endif
+		{{$listing['bids']}}
+	</div>
+
 	<div class="seller-information">
 		<h4>Verkoper informatie</h4>
 		{{-- {{$listing['user']}} --}}

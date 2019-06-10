@@ -29,6 +29,6 @@ class listing extends Model
 
 	public function favorites()
 	{
-		$this->hasMany('App\favorite');
+		return $this->hasMany('App\favorite');
 	}
 }

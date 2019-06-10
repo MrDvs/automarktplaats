@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use \App\listing;
+use \App\favorite;
 use \App\Bid;
 
 class ProfileController extends Controller
@@ -18,14 +19,16 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $listings = listing::where('user_id', $user->id)->with('vehicle')->with('bids')->get();
+        $bids = Bid::where('user_id', $user->id)->with('listing')->get();
+        $favorites = favorite::where('user_id', $user->id)->with('listing')->get();
 
-        // dd($listings);
+        // dd($favorites);
 
-        foreach ($listings as $key => $listing) {
-            $listings[$key]->highest_bid = Bid::where('listing_id', $listing['id'])->max('amount');
-        }
+        // foreach ($listings as $key => $listing) {
+        //     $listings[$key]->highest_bid = Bid::where('listing_id', $listing['id'])->max('amount');
+        // }
             
-        return view('profile.index', ['user' => $user, 'listings' => $listings]);
+        return view('profile.index', ['user' => $user, 'listings' => $listings, 'bids' => $bids, 'favorites' => $favorites]);
     }
 
     /**

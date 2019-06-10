@@ -23,7 +23,8 @@ class listing extends Model
 
 	public function bids()
 	{
-		return $this->hasMany('App\Bid');
+		// Altijd sorteren op de 'amount' kolom van hoog naar laag.
+		return $this->hasMany('App\Bid')->orderBy('amount', 'desc');
 	}
 
 	public function favorites()

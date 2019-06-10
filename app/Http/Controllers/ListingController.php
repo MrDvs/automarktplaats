@@ -30,7 +30,7 @@ class ListingController extends Controller
     public function index()
     {
         // Haal alle listings op uit de database
-        $listings = listing::with('vehicle', 'images')->paginate(10);
+        $listings = listing::with('vehicle', 'images', 'bids')->paginate(10);
         // return $listings;
         return view('listings.index', ['listings' => $listings]);
     }
@@ -134,6 +134,7 @@ class ListingController extends Controller
     public function show($id)
     {
         $listing = listing::where('id', $id)->with('vehicle', 'user', 'images', 'bids')->get();
+        // dd($listing);
 
         $favorite = favorite::where([
             ['user_id', Auth::id()],
@@ -147,9 +148,10 @@ class ListingController extends Controller
         }
 
         if (count($listing[0]['bids'])) {
-            foreach ($listing[0]['bids'] as $bid) {
+            foreach ($listing[0]['bids'] as $key => $bid) {
+                // echo $bid;
                 $user = User::find($bid['user_id']);
-                $listing[0]['bids']
+                $listing[0]['bids'][$key]['username'] = $user['first_name'];
             }
         }
 
@@ -183,7 +185,7 @@ class ListingController extends Controller
 
         // Checked of de listing bestaat (als count() niet 0 is).
         if (count($listing)) {
-            // return view('listings.show', ['listing' => $listing[0], 'favorite' => $favorite]);
+            return view('listings.show', ['listing' => $listing[0], 'favorite' => $favorite]);
         } else {
             echo 'Deze listing bestaat niet <a href="'.route('listing.index').'">Ga terug</a>';
         }

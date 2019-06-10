@@ -7,6 +7,17 @@
 	<h1 id="title">{{ $listing->title }}</h1>
 	<h2>{{$listing['vehicle']->make}} {{$listing['vehicle']->model}}</h2>
 
+	{{-- Als er errors zijn, worden deze hier weergeven. Dit zijn validatie errors. --}}
+	@if ($errors->any())
+		<div class="alert alert-danger text-center">
+			<ul>
+				@foreach ($errors->all() as $error)
+					<h5>{{ $error }}</h5>
+				@endforeach
+			</ul>
+		</div>
+	@endif
+
 	<div class="row" style="max-height: 430px;">
 
 		<div class="carousel-container col-md-8">
@@ -49,7 +60,7 @@
 		</div>
 
 		<div class="vehicle-information col-md-4">
-			<h4 style="font-weight: bold;">Beknopte informatie:</h4>
+			{{-- <h4 style="font-weight: bold;">Beknopte informatie:</h4>
 			<hr>
 
 			<h5>Kenteken: {{$listing['vehicle']->license_plate}}</h5>
@@ -61,7 +72,47 @@
 
 			<h5>Brandstof: {{$listing['vehicle']->fuel_type}}</h5>
 
-			<h5>Vermogen: {{$listing['vehicle']->power}} PK</h5>
+			<h5>Vermogen: {{$listing['vehicle']->power}} PK</h5> --}}
+			<h4>Biedingen</h4>
+			@if (Auth::check())
+				<form action="{{url('/bieden')}}" method="POST">
+
+					{{ csrf_field() }}
+					<div class="form-group">
+						<label for="bidInput">Breng een bod uit (vanaf €{{$listing['starting_price']}}): </label>
+						<input  class="form-control" type="text" id="bidInput" name="bidAmount" placeholder="Bedrag">
+					</div>
+					<input type="hidden" name="listingId" value="{{$listing['id']}}">
+					<input type="hidden" name="minAmount" value="{{$listing['starting_price']}}">
+					<button type="submit">Bied</button>
+
+				</form>
+			@endif
+			@if(count($listing['bids']))
+				@foreach($listing['bids'] as $bid)
+					<div class="bid" style="background-color: #fff; margin: 5px;">
+						<div class="row">
+							<div class="col-md-4">
+								<p class="bid-name">
+									{{$bid['username']}}
+								</p>
+							</div>
+							<div class="col-md-4">
+								<p class="bid-amount">
+									{{$bid['amount']}}
+								</p>
+							</div>
+							<div class="col-md-4">
+								<p class="bid-amount">
+									{{$bid['created_at']->format('d M. Y')}}
+								</p>
+							</div>
+						</div>
+					</div>
+				@endforeach
+			@else
+				<h5>Er is nog niet geboden op deze advertentie. Breng het eerste bod uit!</h5>
+			@endif	
 		</div>
 
 	</div>
@@ -131,15 +182,6 @@
 
 		<h5>{{$listing->description}}</h5>
 		<hr>
-	</div>
-
-	<div class="bids">
-		@if (Auth::check())
-			<h5>Breng een bod uit: </h5>
-			<input type="text" placeholder="Bedrag">
-			<input type="button" class="btn btn-primary" value="Bied">
-		@endif
-		{{$listing['bids']}}
 	</div>
 
 	<div class="seller-information">

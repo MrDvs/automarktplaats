@@ -24,12 +24,15 @@ Route::get('/test', 'PageController@test');
 Route::get('/addFavorite', 'FavoriteController@store');
 Route::get('/removeFavorite', 'FavoriteController@destroy');
 
-// Main routes
+// Home routes
 Route::get('/', 'PageController@index')->name('index');
-
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Profile routes
 Route::get('/profiel', 'ProfileController@index')->name('profiel');
 Route::put('/profiel/{id}', 'ProfileController@update');
+
+// Bid routes
+Route::post('/bieden', 'BidController@store');
 
 

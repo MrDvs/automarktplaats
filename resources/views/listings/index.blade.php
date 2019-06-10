@@ -45,7 +45,15 @@
 						</div>
 
 						<div class="starting-price">
-							<h5>Begin prijs: €{{$listing['starting_price']}}</h5>
+							<h5>Richt prijs: €{{$listing['starting_price']}}</h5>
+						</div>
+
+						<div class="highest-bid">
+							@if(count($listing['bids']))
+							<h5>Hoogste bod: €{{$listing['bids'][0]['amount']}}</h5>
+							@else
+							<h5>Er is nog niet geboden op deze advertentie. Breng het eerste bod uit!</h5>
+							@endif
 						</div>
 
 					</div>

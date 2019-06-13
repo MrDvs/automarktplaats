@@ -30,8 +30,12 @@ class ListingController extends Controller
     public function index()
     {
         // Haal alle listings op uit de database
-        $listings = listing::with('vehicle', 'images', 'bids')->paginate(10);
-        // return $listings;
+        $listings = listing::with('vehicle', 'images', 'bids', 'favorites')->paginate(10);
+        // dd($listings);
+        foreach ($listings as $key => $listing) {
+            $listings[$key]['favorited'] = count($listing['favorites']);
+        }
+
         return view('listings.index', ['listings' => $listings]);
     }
 
@@ -115,13 +119,12 @@ class ListingController extends Controller
             $img = Intervention::make(Storage::disk('public')->get($images->img_path))
                 ->fit(664, 373)
                 ->encode('jpg', 80);
-            echo $img->width();
             Storage::disk('public')->delete($images->img_path);
             Storage::disk('public')->put($images->img_path, $img);
         }
 
 
-        // return redirect('listing/'.$listing->id);
+        return redirect('listing/'.$listing->id);
 
     }
 
@@ -233,12 +236,12 @@ class ListingController extends Controller
 
         if ($listing[0]['user_id'] == Auth::id()) {
 
-            foreach ($listing[0]['images'] as $image) {
-                echo $image->img_path."<br><br>";
-                Storage::delete('/public/'.$image->img_path);
-            }
+            // foreach ($listing[0]['images'] as $image) {
+            //     echo $image->img_path."<br><br>";
+            //     Storage::delete('/public/'.$image->img_path);
+            // }
 
-            $listing->delete();
+            $listing[0]->delete();
             return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
         } else {
             echo "Das machen sie eswas nicht machen meiner soon";

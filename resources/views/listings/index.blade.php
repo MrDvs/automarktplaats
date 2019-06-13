@@ -56,6 +56,11 @@
 							@endif
 						</div>
 
+						<div class="favorited">
+							<i class="fas fa-star"></i>
+							X {{$listing['favorited']}}
+						</div>
+
 					</div>
 
 					<a href="{{ url('listing/'.$listing->id) }}">Meer informatie ></a>

@@ -241,8 +241,13 @@ class ListingController extends Controller
             //     Storage::delete('/public/'.$image->img_path);
             // }
 
-            $listing[0]->delete();
-            return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
+            // $listing[0]->delete();
+            foreach ($listing[0]['images'] as $image) {
+                // $image->delete();
+                echo $image['img_path'];
+                Storage::delete('public/'.$image['img_path']);
+            }
+            // return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
         } else {
             echo "Das machen sie eswas nicht machen meiner soon";
         }

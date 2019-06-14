@@ -47,12 +47,18 @@
 					<div class="form-group">
 						<label for="descriptionInput">Advertentie beschrijving</label>
 						{{-- <input type="text" id="descriptionInput" class="form-control" name="description" placeholder="Beschrijving" maxlength="191" required> --}}
-						<textarea name="description" id="descriptionInput" class="form-control" placeholder="Beschrijving" style="width: 100%" ></textarea>
+						<textarea name="description" id="descriptionInput" class="form-control" placeholder="Beschrijving" style="width: 100%"></textarea>
 					</div>
 
 					<div class="form-group">
 						<label for="priceInput">Begin prijs</label>
 						<input type="number" id="priceInput" class="form-control" name="price" >
+					</div>
+
+					<div class="form-group">
+						<label for="date">Eind datum</label>
+						<input type="text" id="date" class="form-control" value="{{$endDate}}" aria-describedby="dateHelp" readonly>
+						<small id="dateHelp" class="form-text text-muted">Alle advertenties staan standaard 1 week op Automarktplaats.</small>
 					</div>
 
 				</div>

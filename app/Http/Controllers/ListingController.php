@@ -46,9 +46,11 @@ class ListingController extends Controller
      */
     public function create()
     {
+        $endDate = Carbon::now()->addWeek()->format('d-m-Y');
+
         // Haalt de RDW app token uit de .env file voor de api call
         $RDW_APP_TOKEN = env('RDW_APP_TOKEN');
-        return view('listings.create', ['RDW_APP_TOKEN' => $RDW_APP_TOKEN]);
+        return view('listings.create', ['RDW_APP_TOKEN' => $RDW_APP_TOKEN, 'endDate' => $endDate]);
     }
 
     /**

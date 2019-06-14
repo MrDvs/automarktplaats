@@ -30,6 +30,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Profile routes
 Route::get('/profiel', 'ProfileController@index')->name('profiel');
+Route::get('/profiel/{slug}', 'ProfileController@show');
 Route::put('/profiel/{id}', 'ProfileController@update');
 
 // Bid routes

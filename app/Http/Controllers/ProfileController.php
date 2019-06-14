@@ -35,7 +35,12 @@ class ProfileController extends Controller
         //     $listings[$key]->highest_bid = Bid::where('listing_id', $listing['id'])->max('amount');
         // }
 
-        return view('profile.index', ['user' => $user, 'listings' => $listings, 'bids' => $bids, 'favorites' => $favorites]);
+        return view('profile.index', [
+            'user' => $user, 
+            'listings' => $listings, 
+            'bids' => $bids, 
+            'favorites' => $favorites
+        ]);
     }
 
     /**
@@ -65,9 +70,26 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $user = Auth::user();
+        switch ($slug) {
+            case 'advertenties':
+                echo 'advertenties';
+                $listings = listing::where('user_id', $user->id)->with('vehicle')->with('bids')->get();
+                return view('profile.listings', ['listings' => $listings]);
+                break;
+            case 'biedingen':
+                echo 'biedingen';
+                $bids = Bid::where('user_id', $user->id)->with('listing')->get();
+                return view('profile.bids', ['bids' => $bids]);
+                break;
+            case 'favorieten':
+                echo 'favorieten';
+                $favorites = favorite::where('user_id', $user->id)->with('listing')->get();
+                return view('profile.favorites', ['favorites' => $favorites]);
+                break;
+        }
     }
 
     /**

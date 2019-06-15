@@ -18,7 +18,7 @@
 				</div>
 
 				<div class="listing-preview-img">
-					<img src="{{ $listing['img_path'] }}" alt="{{$listing['vehicle']['make'].' '.$listing['vehicle']['model'] }}">
+					<img src="{{ asset('storage/'.$listing['image']) }}" alt="{{$listing['vehicle']['make'].' '.$listing['vehicle']['model'] }}">
 				</div>
 
 				<div class="description">
@@ -32,15 +32,15 @@
 				<div class="bids">
 					<h5>Aantal biedingen: {{count($listing['bids'])}}</h5>
 					@if(count($listing['bids']))
-						<h5>Hoogste bieding: €{{$listing['highest_bid']}}</h5>
+						<h5>Hoogste bod: €{{$listing['highest_bid']}}</h5>
 					@endif
 				</div>
 
 				<div class="listing-buttons">
 					<a href="{{ url('listing/'.$listing->id) }}" class="btn btn-primary">Bekijken</a>
 					<a href="{{ url('listing/'.$listing->id.'/edit') }}" class="btn btn-success">Bewerken</a>
-					<a href="{{ url('listing/'.$listing->id) }}" class="btn btn-danger" onclick="event.preventDefault(); document.getElementById('remove-form').submit();">Verwijderen</a>
-					<form id="remove-form" action="{{url('/listing/'.$listing->id)}}" method="POST" style="display: none;">
+					<a class="btn btn-danger" onclick="event.preventDefault(); document.getElementById('remove-form-{{$listing['id']}}').submit();">Verwijderen</a>
+					<form id="remove-form-{{$listing['id']}}" action="{{url('listing/'.$listing->id)}}" method="POST" style="display: none;">
 						@csrf
 						@method('DELETE')
 					</form>

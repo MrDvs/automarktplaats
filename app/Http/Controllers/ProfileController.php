@@ -19,27 +19,15 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $listings = listing::where('user_id', $user->id)->with('vehicle')->with('bids')->get();
-        $favorites = favorite::where('user_id', $user->id)->with('listing')->get();
-        $bids = Bid::where('user_id', $user->id)->with('listing')->get();
-
-        foreach ($favorites as $key => $favorite) {
-            // echo $favorite['listing']['id'];
-            $image = Image::where([['listing_id', $favorite['listing']['id']], ['mainImage', 1]])->get();
-            $favorites[$key]['image'] = $image[0]['img_path'];
-        }
-
-        // dd($favorites);
-
-        // foreach ($listings as $key => $listing) {
-        //     $listings[$key]->highest_bid = Bid::where('listing_id', $listing['id'])->max('amount');
-        // }
+        // $listings = listing::where('user_id', $user->id)->with('vehicle')->with('bids')->get();
+        // $favorites = favorite::where('user_id', $user->id)->with('listing')->get();
+        // $bids = Bid::where('user_id', $user->id)->with('listing')->get();
 
         return view('profile.index', [
-            'user' => $user, 
-            'listings' => $listings, 
-            'bids' => $bids, 
-            'favorites' => $favorites
+            'user' => $user
+            // 'listings' => $listings, 
+            // 'bids' => $bids, 
+            // 'favorites' => $favorites
         ]);
     }
 
@@ -74,19 +62,31 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         switch ($slug) {
+
             case 'advertenties':
-                echo 'advertenties';
-                $listings = listing::where('user_id', $user->id)->with('vehicle')->with('bids')->get();
+                $listings = listing::where('user_id', $user->id)->with('vehicle', 'bids')->get();
+                foreach ($listings as $key => $listing) {
+                    // Pak het hoogste bod op deze listing
+                    $listings[$key]->highest_bid = Bid::where('listing_id', $listing['id'])->max('amount');
+
+                    // Pak de path naar de main image van deze listing
+                    $image = Image::where([['listing_id', $listing['id']], ['mainImage', 1]])->get();
+                    $listings[$key]['image'] = $image[0]['img_path'];
+                }
                 return view('profile.listings', ['listings' => $listings]);
                 break;
+
             case 'biedingen':
-                echo 'biedingen';
                 $bids = Bid::where('user_id', $user->id)->with('listing')->get();
                 return view('profile.bids', ['bids' => $bids]);
                 break;
+
             case 'favorieten':
-                echo 'favorieten';
                 $favorites = favorite::where('user_id', $user->id)->with('listing')->get();
+                foreach ($favorites as $key => $favorite) {
+                    $image = Image::where([['listing_id', $favorite['listing']['id']], ['mainImage', 1]])->get();
+                    $favorites[$key]['image'] = $image[0]['img_path'];
+                }
                 return view('profile.favorites', ['favorites' => $favorites]);
                 break;
         }

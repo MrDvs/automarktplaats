@@ -40,19 +40,19 @@
 
 					<div class="form-group">
 						<label for="titleInput">Advertentie titel</label>
-						<input type="text" id="titleInput" class="form-control" name="title" {{-- onkeypress="charCount('#titleInput')" --}} placeholder="Titel" maxlength="191" >
+						<input type="text" id="titleInput" class="form-control" name="title" {{-- onkeypress="charCount('#titleInput')" --}} placeholder="Titel" maxlength="191" value="{{old('title')}}" >
 						{{-- <span class="counter">0</span>/191 --}}
 					</div>
 
 					<div class="form-group">
 						<label for="descriptionInput">Advertentie beschrijving</label>
 						{{-- <input type="text" id="descriptionInput" class="form-control" name="description" placeholder="Beschrijving" maxlength="191" required> --}}
-						<textarea name="description" id="descriptionInput" class="form-control" placeholder="Beschrijving" style="width: 100%"></textarea>
+						<textarea name="description" id="descriptionInput" class="form-control" placeholder="Beschrijving" style="width: 100%">{{old('description')}}</textarea>
 					</div>
 
 					<div class="form-group">
 						<label for="priceInput">Begin prijs</label>
-						<input type="number" id="priceInput" class="form-control" name="price" >
+						<input type="number" id="priceInput" class="form-control" name="price" value="{{old('price')}}" >
 					</div>
 
 					<div class="form-group">
@@ -69,44 +69,44 @@
 
 					<h2 class="text-center">Voer hier je kenteken in:</h2>
 					<div class="kenteken-container" style="width: 150px; margin: auto; padding-bottom: 2vh">
-						<input type="text" class="kentekenplaat">
+						<input type="text" class="kentekenplaat" value="{{old('licenseplate')}}">
 					</div>
 					<span class="warning"></span>
 
 					<div class="form-group">
 						<label for="makeInput">Merk</label>
-						<input type="text" id="makeInput" class="form-control" name="make" placeholder="merk" >
+						<input type="text" id="makeInput" class="form-control" name="make" placeholder="merk" value="{{old('make')}}" >
 					</div>
 
 					<div class="form-group">
 						<label for="modelInput">Model</label>
-						<input type="text" id="modelInput" class="form-control" name="model" placeholder="model" >
+						<input type="text" id="modelInput" class="form-control" name="model" placeholder="model" value="{{old('model')}}" >
 					</div>
 					<hr>
 
 					<div class="form-group">
 						<label for="mileageInput">Kilometer stand</label>
-						<input type="number" id="mileageInput" class="form-control" name="mileage" placeholder="Kilometer stand" >
+						<input type="number" id="mileageInput" class="form-control" name="mileage" placeholder="Kilometer stand" value="{{old('mileage')}}" >
 					</div>
 
 					<div class="form-group">
 						<label for="licenseplateInput">Kenteken</label>
-						<input type="text" id="licenseplateInput" class="form-control" name="licenseplate" placeholder="Kenteken" >
+						<input type="text" id="licenseplateInput" class="form-control" name="licenseplate" placeholder="Kenteken" value="{{old('licenseplate')}}" >
 					</div>
 
 					<div class="form-group">
 						<label for="yearInput">Bouwjaar</label>
-						<input type="text" id="yearInput" class="form-control" name="year" placeholder="Bouwjaar">
+						<input type="text" id="yearInput" class="form-control" name="year" placeholder="Bouwjaar" value="{{old('year')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="colorInput">Kleur</label>
-						<input type="text" id="colorInput" class="form-control" name="color" placeholder="Kleur">
+						<input type="text" id="colorInput" class="form-control" name="color" placeholder="Kleur" value="{{old('color')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="stateInput">Staat</label>
-						<select class="form-control" name="state" class="custom-select" id="stateInput">
+						<select class="form-control" name="state" class="custom-select" id="stateInput" value="{{old('state')}}">
 						  <option value="U" selected>Gebruikt</option>
 						  <option value="N">Nieuw</option>
 						</select>
@@ -114,47 +114,47 @@
 
 					<div class="form-group">
 						<label for="bodyInput">Carroserie</label>
-						<input type="text" id="bodyInput" class="form-control" name="body" placeholder="Carroserie">
+						<input type="text" id="bodyInput" class="form-control" name="body" placeholder="Carroserie" value="{{old('body')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="apkInput">APK vervaldatum</label>
-						<input type="text" id="apkInput" class="form-control" name="apk" placeholder="APK vervaldatum">
+						<input type="text" id="apkInput" class="form-control" name="apk" placeholder="APK vervaldatum" value="{{old('apk')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="transmissionInput">Type versnellingsbak</label>
-						<input type="text" id="transmissionInput" class="form-control" name="transmission" placeholder="Type versnellingsbak">
+						<input type="text" id="transmissionInput" class="form-control" name="transmission" placeholder="Type versnellingsbak" value="{{old('transmission')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="gearInput">Aantal versnellingen</label>
-						<input type="number" id="gearInput" class="form-control" name="gear" placeholder="Aantal versnellingen">
+						<input type="number" id="gearInput" class="form-control" name="gear" placeholder="Aantal versnellingen" value="{{old('gear')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="capacityInput">Motor inhoud</label>
-						<input type="number" id="capacityInput" class="form-control" name="capacity" placeholder="Motor inhoud">
+						<input type="number" id="capacityInput" class="form-control" name="capacity" placeholder="Motor inhoud" value="{{old('capacity')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="cylinderInput">Aantal cilinders</label>
-						<input type="number" id="cylinderInput" class="form-control" name="cylinder" placeholder="Aantal cilinders">
+						<input type="number" id="cylinderInput" class="form-control" name="cylinder" placeholder="Aantal cilinders" value="{{old('cylinder')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="weightInput">Leeggewicht</label>
-						<input type="number" id="weightInput" class="form-control" name="weight" placeholder="Leeggewicht">
+						<input type="number" id="weightInput" class="form-control" name="weight" placeholder="Leeggewicht" value="{{old('weight')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="driveInput">Aandrijving</label>
-						<input type="text" id="driveInput" class="form-control" name="drive" placeholder="Aandrijving">
+						<input type="text" id="driveInput" class="form-control" name="drive" placeholder="Aandrijving" value="{{old('drive')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="fuelInput">Brandstof</label>
-						<select name="fuel" id="fuelInput" class="custom-select">
+						<select name="fuel" id="fuelInput" class="custom-select" value="{{old('fuel')}}">
 						  <option selected disabled>Brandstof</option>
 						  <option value="Elektriciteit">Elektrisch</option>
 						  <option value="Hybride">Hybride</option>
@@ -166,17 +166,17 @@
 
 					<div class="form-group">
 						<label for="doorInput">Aantal deuren</label>
-						<input type="number" id="doorInput" class="form-control" name="door" placeholder="Aantal deuren">
+						<input type="number" id="doorInput" class="form-control" name="door" placeholder="Aantal deuren" value="{{old('door')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="seatInput">Aantal zitplaatsen</label>
-						<input type="number" id="seatInput" class="form-control" name="seat" placeholder="Aantal zitplaatsen">
+						<input type="number" id="seatInput" class="form-control" name="seat" placeholder="Aantal zitplaatsen" value="{{old('seat')}}">
 					</div>
 
 					<div class="form-group">
 						<label for="powerInput">Vermogen (pk)</label>
-						<input type="number" id="powerInput" class="form-control" name="power" placeholder="Vermogen">
+						<input type="number" id="powerInput" class="form-control" name="power" placeholder="Vermogen" value="{{old('power')}}">
 					</div>
 
 				</div>

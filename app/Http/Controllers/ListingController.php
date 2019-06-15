@@ -61,7 +61,6 @@ class ListingController extends Controller
      */
     public function store(Request $request)
     {
-
         // Hier vind de validatie van alle form fields plaats.
         request()->validate([
             'mainImage' => 'required|image|max:2048',
@@ -111,20 +110,21 @@ class ListingController extends Controller
         Storage::disk('public')->delete($images->img_path);
         Storage::disk('public')->put($images->img_path, $img);
 
-        foreach (request('extraImages') as $image) {
-            $images = new Image();
-            $images->listing_id = $listing->id;
-            $images->img_path = substr($image->store('public'), 6);
-            $images->save();
+        if (!is_null(request('extraImages'))) {
+            foreach (request('extraImages') as $image) {
+                $images = new Image();
+                $images->listing_id = $listing->id;
+                $images->img_path = substr($image->store('public'), 6);
+                $images->save();
 
-            // Hier haalt intervention de image weer op, zorgt er voor dat de afbeelding het juiste formaat heeft en slaat het op als een JPG met 80% van zijn orginele kwaliteit. Daarnaast word de orginele afbeelding verwijderd.
-            $img = Intervention::make(Storage::disk('public')->get($images->img_path))
-                ->fit(664, 373)
-                ->encode('jpg', 80);
-            Storage::disk('public')->delete($images->img_path);
-            Storage::disk('public')->put($images->img_path, $img);
+                // Hier haalt intervention de image weer op, zorgt er voor dat de afbeelding het juiste formaat heeft en slaat het op als een JPG met 80% van zijn orginele kwaliteit. Daarnaast word de orginele afbeelding verwijderd.
+                $img = Intervention::make(Storage::disk('public')->get($images->img_path))
+                    ->fit(664, 373)
+                    ->encode('jpg', 80);
+                Storage::disk('public')->delete($images->img_path);
+                Storage::disk('public')->put($images->img_path, $img);
+            }
         }
-
 
         return redirect('listing/'.$listing->id);
 
@@ -234,22 +234,21 @@ class ListingController extends Controller
      */
     public function destroy($id)
     {
-        $listing = listing::where('id', $id)->with('images')->get();
+        $listing = listing::where('id', $id)->with('images', 'vehicle')->get();
 
         if ($listing[0]['user_id'] == Auth::id()) {
 
-            // foreach ($listing[0]['images'] as $image) {
-            //     echo $image->img_path."<br><br>";
-            //     Storage::delete('/public/'.$image->img_path);
-            // }
+            // dd($listing);
 
-            // $listing[0]->delete();
             foreach ($listing[0]['images'] as $image) {
-                // $image->delete();
-                echo $image['img_path'];
-                Storage::delete('public/'.$image['img_path']);
+                echo $image->img_path."<br><br>";
+                Storage::delete('/public/'.$image->img_path);
+                $image->delete();
             }
-            // return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
+            $listing[0]['vehicle']->delete();
+            $listing[0]->delete();
+
+            return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
         } else {
             echo "Das machen sie eswas nicht machen meiner soon";
         }

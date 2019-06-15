@@ -196,11 +196,11 @@
 		</div> --}}
 
 	</div>
-	<form action="{{url('/listing/'.$listing['id'])}}" method="POST">
+	{{-- <form action="{{url('/listing/'.$listing['id'])}}" method="POST">
 		@csrf
 		@method('DELETE')
 		<button type="submit" class="btn btn-danger">Verwijderen</button>
-	</form>
+	</form> --}}
 
 	<script>
 		function addFavorite(userId, listingId) {

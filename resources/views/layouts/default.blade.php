@@ -33,13 +33,13 @@
 			  </button>
 			  <div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
-				  <li class="nav-item active">
+				  <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
 					<a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
 				  </li>
-				  <li class="nav-item">
+				  <li class="nav-item {{ request()->is('listing') ? 'active' : '' }}">
 					<a class="nav-link" href="{{ route('listing.index') }}">Kopen</a>
 				  </li>
-				  <li class="nav-item">
+				  <li class="nav-item {{ request()->is('listing/create') ? 'active' : '' }}">
 					<a class="nav-link" href="{{ route('listing.create') }}">Verkopen</a>
 				  </li>
 				</ul>
@@ -64,7 +64,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle {{ request()->is('profiel*') ? 'active' : '' }}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 

@@ -6,6 +6,7 @@
 
 	<h1 id="title">{{ $listing->title }}</h1>
 	<h2>{{$listing['vehicle']->make}} {{$listing['vehicle']->model}}</h2>
+	<h5>Deze advertentie verloopt {{$timeLeft}}</h5>
 
 	{{-- Als er errors zijn, worden deze hier weergeven. Dit zijn validatie errors. --}}
 	@if ($errors->any())
@@ -56,7 +57,6 @@
 			    <span class="sr-only">Next</span>
 			  </a>
 			</div>
-
 		</div>
 
 		<div class="vehicle-information col-md-4">
@@ -112,7 +112,7 @@
 				@endforeach
 			@else
 				<h5>Er is nog niet geboden op deze advertentie. Breng het eerste bod uit!</h5>
-			@endif	
+			@endif
 		</div>
 
 	</div>

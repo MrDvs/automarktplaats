@@ -95,6 +95,7 @@ class ListingController extends Controller
         $listing->title = request('title');
         $listing->description = request('description');
         $listing->starting_price = request('price');
+        $listing->expiration_date = Carbon::now()->addWeek();
         $listing->save();
 
         $images = new Image();
@@ -139,7 +140,8 @@ class ListingController extends Controller
     public function show($id)
     {
         $listing = listing::where('id', $id)->with('vehicle', 'user', 'images', 'bids')->get();
-        // dd($listing);
+        Carbon::setLocale('nl');
+        $timeLeft = Carbon::parse($listing[0]['expiration_date'])->diffForHumans();
 
         $favorite = favorite::where([
             ['user_id', Auth::id()],
@@ -190,7 +192,11 @@ class ListingController extends Controller
 
         // Checked of de listing bestaat (als count() niet 0 is).
         if (count($listing)) {
-            return view('listings.show', ['listing' => $listing[0], 'favorite' => $favorite]);
+            return view('listings.show', [
+                'listing' => $listing[0],
+                'favorite' => $favorite,
+                'timeLeft' => $timeLeft
+            ]);
         } else {
             echo 'Deze listing bestaat niet <a href="'.route('listing.index').'">Ga terug</a>';
         }

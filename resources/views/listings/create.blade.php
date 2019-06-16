@@ -124,7 +124,11 @@
 
 					<div class="form-group">
 						<label for="transmissionInput">Type versnellingsbak</label>
-						<input type="text" id="transmissionInput" class="form-control" name="transmission" placeholder="Type versnellingsbak" value="{{old('transmission')}}">
+						{{-- <input type="text" id="transmissionInput" class="form-control" name="transmission" placeholder="Type versnellingsbak" value="{{old('transmission')}}"> --}}
+						<select name="transmission" class="custom-select" id="transmissionInput" value="{{old('transmission')}}">
+							<option value="Automaat">Automaat</option>
+							<option value="Handgeschakeld">Handgeschakeld</option>
+						</select>
 					</div>
 
 					<div class="form-group">
@@ -149,7 +153,13 @@
 
 					<div class="form-group">
 						<label for="driveInput">Aandrijving</label>
-						<input type="text" id="driveInput" class="form-control" name="drive" placeholder="Aandrijving" value="{{old('drive')}}">
+						{{-- <input type="text" id="driveInput" class="form-control" name="drive" placeholder="Aandrijving" value="{{old('drive')}}"> --}}
+						<select name="drive" id="driveInput" value="{{old('drive')}}" class="custom-select">
+							<option selected disabled>Aandrijving</option>
+							<option value="Voorwiel">Voorwiel</option>
+							<option value="Vierwiel">Vierwiel</option>
+							<option value="Achterwiel">Achterwiel</option>
+						</select>
 					</div>
 
 					<div class="form-group">

@@ -33,6 +33,11 @@ Route::get('/profiel', 'ProfileController@index')->name('profiel');
 Route::get('/profiel/{slug}', 'ProfileController@show');
 Route::put('/profiel/{id}', 'ProfileController@update');
 
+// Chat routes
+Route::get('/chat', 'ChatsController@index');
+Route::get('/chat/messages', 'ChatsController@fetchMessages');
+Route::post('/chat/messages', 'ChatsController@sendMessage');
+
 // Bid routes
 Route::post('/bieden', 'BidController@store');
 

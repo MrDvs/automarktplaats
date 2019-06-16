@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\favorite');
     }
+
+    public function messages()
+    {
+      return $this->hasMany('App\Message');
+    }
 }

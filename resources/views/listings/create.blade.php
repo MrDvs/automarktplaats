@@ -215,21 +215,21 @@
 				    data: {
 				      "kenteken" : licenseplate.toUpperCase(),
 				      "$limit" : 5000,
-				      "$$app_token" : '{{$RDW_APP_TOKEN}}'
+				      "$$app_token" : '{{$RDW_APP_TOKEN}}',
 				    }
 				}).done(function(data) {
 				  if (data[0] && licenseplate.length > 0) {
 					  $('.warning').text('Let op: controleer en verbeter alle invoervelden')
 				  }
-				  $('#makeInput').val(data[0]["merk"])
-				  $('#modelInput').val(data[0]["handelsbenaming"])
+				  $('#makeInput').val(sanitizeString(data[0]["merk"]))
+				  $('#modelInput').val(sanitizeString(data[0]["handelsbenaming"]))
 				  $('#cylinderInput').val(data[0]["aantal_cilinders"])
 				  $('#doorInput').val(data[0]["aantal_deuren"])
 				  $('#seatInput').val(data[0]["aantal_zitplaatsen"])
 				  $('#capacityInput').val(data[0]["cilinderinhoud"])
 				  $('#yearInput').val(data[0]["datum_eerste_toelating"].substring(0,4))
-				  $('#colorInput').val(data[0]["eerste_kleur"])
-				  $('#bodyInput').val(data[0]["inrichting"])
+				  $('#colorInput').val(sanitizeString(data[0]["eerste_kleur"]))
+				  $('#bodyInput').val(sanitizeString(data[0]["inrichting"]))
 				  $('#licenseplateInput').val(data[0]["kenteken"])
 				  $('#weightInput').val(data[0]["massa_ledig_voertuig"])
 
@@ -240,7 +240,7 @@
 				  $('#apkInput').val(day+"-"+month+"-"+year)
 
 				  if($('#titleInput').val() == ""){
-				  	$('#titleInput').val("Nette "+data[0]["merk"]+" "+data[0]["handelsbenaming"]+" uit "+data[0]["datum_eerste_toelating"].substring(0,4)+" te koop")
+				  	$('#titleInput').val("Nette "+sanitizeString(data[0]["merk"])+" "+sanitizeString(data[0]["handelsbenaming"])+" uit "+data[0]["datum_eerste_toelating"].substring(0,4)+" te koop")
 				  }
 
 				  $.ajax({
@@ -249,7 +249,7 @@
 				    data: {
 				      "kenteken" : licenseplate.toUpperCase(),
 				      "$limit" : 5000,
-				      "$$app_token" : '{{$RDW_APP_TOKEN}}'
+				      "$$app_token" : '{{$RDW_APP_TOKEN}}',
 				    }
 				  }).done(function(data) {
 				    console.log(data)
@@ -270,5 +270,10 @@
 			}
 
 		}))
+
+		function sanitizeString(string) {
+			var lowercase = string.toLowerCase();
+			return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
+		}
 	</script>
 @endsection

@@ -59648,8 +59648,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "0e84c5c2ed72444a2501",
   cluster: "eu",
-  encrypted: true,
-  authEndpoint: "/automarktplaats/public/broadcasting/auth"
+  encrypted: true // authEndpoint: "/automarktplaats/public/broadcasting/auth"
+
 });
 
 /***/ }),

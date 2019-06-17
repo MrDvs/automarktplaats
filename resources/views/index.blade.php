@@ -6,19 +6,21 @@
 
 	<h4>Op dit moment hebben wij {{count($listings)}} voertuigen te koop staan.</h4>
 	<div class="row">
-		<form action="">
+		<form action="{{url('listing/zoeken')}}" method="POST">
+			@csrf
 			Merk: 
-			<select name="" id="">
+			<select name="make" id="">
 				@foreach($makes as $make)
-				<option value="{{$make['make']}}">{{$make['make']}}</option>
+				<option value="make|{{$make['make']}}">{{$make['make']}}</option>
 				@endforeach
 			</select>
 			Model:
-			<select name="" id="">
+			<select name="model" id="">
 				@foreach($models as $model)
-				<option value="{{$model['model']}}">{{$model['model']}}</option>
+				<option value="model|{{$model['model']}}">{{$model['model']}}</option>
 				@endforeach
-			</select> 
+			</select>
+			<button type="submit">Zoeken</button> 
 		</form>
 	</div>
 @stop

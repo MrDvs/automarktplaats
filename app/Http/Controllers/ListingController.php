@@ -39,6 +39,28 @@ class ListingController extends Controller
         return view('listings.index', ['listings' => $listings]);
     }
 
+    public function search(Request $request)
+    {
+
+        echo 'Hallo daar <br>';
+        echo 'Ik verwachte je al<br><br>';
+
+        // hier haal ik de csrf token uit de requets data
+        $requests = $request->all();
+        array_shift($requests);
+        
+        $listings = listing::whereHas('vehicle', function ($query) {
+            $query->where([
+                foreach ($requests as $filter) {
+                    $exploded = explode('|', $filter);
+                    [$exploded[0], 'like', $exploded[1]],
+                }
+            ]);
+        })->get();
+
+        print_r($listings);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

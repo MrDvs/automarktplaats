@@ -15,6 +15,7 @@
 Auth::routes();
 
 // Resource route for the listings
+Route::post('listing/zoeken', 'ListingController@search');
 Route::resource('listing', 'ListingController');
 
 // Test route

@@ -19,7 +19,11 @@ class PageController extends Controller
         $makes = vehicle::select('make')->distinct()->get();
         $models = vehicle::select('model')->distinct()->get();
         
-        return view('index', ['listings' => $listings, 'makes' => $makes, 'models' => $models]);
+        return view('index', [
+            'listings' => $listings, 
+            'makes' => $makes, 
+            'models' => $models
+        ]);
     }
 
     public function test()

@@ -266,7 +266,7 @@ class ListingController extends Controller
         echo 'Hallo daar <br>';
         echo 'Ik verwachte je al<br><br>';
 
-        // hier haal ik de csrf token uit de requets data
+        // hier haal ik de csrf token uit de request data
         $requests = $request->all();
         array_shift($requests);
         print_r($requests);
@@ -314,5 +314,11 @@ class ListingController extends Controller
         })->paginate(10);
 
         return view('listings.index', ['listings' => $listings]);
+    }
+
+    public function axios()
+    {
+        $makes = vehicle::select('make')->distinct()->get();
+        return response()->json($makes);
     }
 }

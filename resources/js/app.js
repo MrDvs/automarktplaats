@@ -20,7 +20,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('search-form', require('./components/searchForm.vue').default);
 Vue.component('chat-messages', require('./components/ChatMessages.vue'));
 Vue.component('chat-form', require('./components/ChatForm.vue'));
 
@@ -39,7 +39,7 @@ const app = new Vue({
 
     created() {
         this.fetchMessages();
-        
+
         Echo.private('chat')
 			.listen('MessageSent', (e) => {
 				this.messages.push({

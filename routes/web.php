@@ -28,6 +28,7 @@ Route::get('/test', 'PageController@test');
 // Ajax calls
 Route::get('/addFavorite', 'FavoriteController@store');
 Route::get('/removeFavorite', 'FavoriteController@destroy');
+Route::post('/axiostest', 'ListingController@axios');
 
 // Home routes
 Route::get('/', 'PageController@index')->name('index');

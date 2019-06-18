@@ -25,5 +25,8 @@
 			<button type="submit">Zoeken</button>
 		</form>
 	</div>
+	<div id="app">
+        <search-form></search-form>
+    </div>
 @stop
 

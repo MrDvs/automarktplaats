@@ -8,19 +8,21 @@
 	<div class="row">
 		<form action="{{url('listing/zoeken')}}" method="POST">
 			@csrf
-			Merk: 
+			Merk:
 			<select name="make" id="">
+				<option value="make|">Alle</option>
 				@foreach($makes as $make)
 				<option value="make|{{$make['make']}}">{{$make['make']}}</option>
 				@endforeach
 			</select>
 			Model:
 			<select name="model" id="">
+				<option value="model|">Alle</option>
 				@foreach($models as $model)
 				<option value="model|{{$model['model']}}">{{$model['model']}}</option>
 				@endforeach
 			</select>
-			<button type="submit">Zoeken</button> 
+			<button type="submit">Zoeken</button>
 		</form>
 	</div>
 @stop

@@ -39,37 +39,6 @@ class ListingController extends Controller
         return view('listings.index', ['listings' => $listings]);
     }
 
-    public function search(Request $request)
-    {
-
-        echo 'Hallo daar <br>';
-        echo 'Ik verwachte je al<br><br>';
-
-        // hier haal ik de csrf token uit de requets data
-        $requests = $request->all();
-        array_shift($requests);
-        print_r($requests);
-        echo '<br><br>';
-  
-        $listings = listing::with('vehicle')->get();
-        foreach ($listings as $key => $listing) {
-            echo $listing['vehicle']['model'];
-            foreach ($requests as $filter) {
-                $exploded = explode('|', $filter);
-                echo $key;
-                if ($listing['vehicle'][$exploded[0]] != $exploded[1]) {
-                    unset($listings[$key]);
-                }
-            }
-        }
-
-
-        foreach ($listings as $result) {
-            print_r($result);
-            echo '<br><br>';
-        }
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -289,5 +258,61 @@ class ListingController extends Controller
         } else {
             echo "Das machen sie eswas nicht machen meiner soon";
         }
+    }
+
+    public function search(Request $request)
+    {
+
+        echo 'Hallo daar <br>';
+        echo 'Ik verwachte je al<br><br>';
+
+        // hier haal ik de csrf token uit de requets data
+        $requests = $request->all();
+        array_shift($requests);
+        print_r($requests);
+        echo '<br><br>';
+        $requestt = $requests['make'];
+        print_r(explode('|', $requestt));
+
+        $listings = listing::with('vehicle', 'images', 'bids', 'favorites')->paginate(10);
+        foreach ($listings as $key => $listing) {
+            echo $listing['vehicle']['model'];
+            foreach ($requests as $filter) {
+                $exploded = explode('|', $filter);
+                if ($exploded[1] !=  '') {
+                    if ($listing['vehicle'][$exploded[0]] != $exploded[1]) {
+                    unset($listings[$key]);
+                }
+                }
+            }
+        }
+
+        // foreach ($listings as $listing) {
+        //     print_r($listing);
+        //     echo '<br><br>';
+        // }
+
+        return view('listings.index', ['listings' => $listings]);
+    }
+
+    public function searchMake($make)
+    {
+        $listings = listing::with('vehicle', 'images', 'bids', 'favorites')->whereHas('vehicle', function ($query) use($make) {
+            $query->where('make', '=', $make);
+        })->paginate(10);
+
+        return view('listings.index', ['listings' => $listings]);
+    }
+
+    public function searchMakeModel($make, $model)
+    {
+        $listings = listing::with('vehicle', 'images', 'bids', 'favorites')->whereHas('vehicle', function ($query) use($make, $model) {
+            [
+                [$query->where('make', '=', $make)],
+                [$query->where('model', '=', $model)]
+            ];
+        })->paginate(10);
+
+        return view('listings.index', ['listings' => $listings]);
     }
 }

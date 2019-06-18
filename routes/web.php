@@ -14,8 +14,10 @@
 // Auth routes
 Auth::routes();
 
-// Resource route for the listings
+// Resource route voor de listings
 Route::post('listing/zoeken', 'ListingController@search');
+// Route::get('listing/zoeken/{make}', 'ListingController@searchMake');
+// Route::get('listing/zoeken/{make}/{model}', 'ListingController@searchMakeModel');
 Route::resource('listing', 'ListingController');
 
 // Test route

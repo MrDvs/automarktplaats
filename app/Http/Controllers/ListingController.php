@@ -48,17 +48,26 @@ class ListingController extends Controller
         // hier haal ik de csrf token uit de requets data
         $requests = $request->all();
         array_shift($requests);
-        
-        $listings = listing::whereHas('vehicle', function ($query) {
-            $query->where([
-                foreach ($requests as $filter) {
-                    $exploded = explode('|', $filter);
-                    [$exploded[0], 'like', $exploded[1]],
+        print_r($requests);
+        echo '<br><br>';
+  
+        $listings = listing::with('vehicle')->get();
+        foreach ($listings as $key => $listing) {
+            echo $listing['vehicle']['model'];
+            foreach ($requests as $filter) {
+                $exploded = explode('|', $filter);
+                echo $key;
+                if ($listing['vehicle'][$exploded[0]] != $exploded[1]) {
+                    unset($listings[$key]);
                 }
-            ]);
-        })->get();
+            }
+        }
 
-        print_r($listings);
+
+        foreach ($listings as $result) {
+            print_r($result);
+            echo '<br><br>';
+        }
     }
 
     /**

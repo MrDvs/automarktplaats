@@ -15,7 +15,22 @@ class ChatController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($id)
+    public function index()
+    {
+    	// $messages = Message::where('receiver_id', Auth::id())
+	    // 	->orWhere('sender_id', Auth::id())
+	    // 	->get();
+
+	    $chats = Message::groupBy('receiver_id')->where('sender_id', Auth::id())->get();
+
+	   	dd($chats);
+
+
+	    // return view('chat.index', ['chats' => $chats]);
+
+    }
+
+    public function show($id)
     {
     	$messages = Message::
 	    	where([
@@ -29,14 +44,10 @@ class ChatController extends Controller
 	    	])
 	    	->with('sender', 'receiver')
 	    	->get();
-	    // dd($messages);
-    	foreach ($messages as $message) {
-    		echo $message['sender']['name'].': '.$message['message'].' '.$message['created_at'];
-    		echo "<br><br>";
-    	}
-    	return view('chat.chat', [
+	    $receiver = User::find($id);
+    	return view('chat.show', [
     		'messages' => $messages,
-    		'receiver_id' => $id
+    		'receiver' => $receiver
     	]);
     }
 

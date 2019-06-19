@@ -42,7 +42,8 @@ Route::get('/profiel/{slug}', 'ProfileController@show');
 Route::put('/profiel/{id}', 'ProfileController@update');
 
 // Chat routes
-Route::get('/chat/{id}', 'ChatController@index');
+Route::get('/chat', 'ChatController@index')->name('chat');
+Route::get('/chat/{id}', 'ChatController@show');
 Route::post('/chat/send', 'ChatController@send');
 
 // Bid routes

@@ -1704,6 +1704,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('component mounted.');
@@ -37176,10 +37181,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "div" }, [
-    _c("li", { staticClass: "list-group-item" }, [_vm._t("default")], 2),
-    _vm._v(" "),
-    _c("small", { staticClass: "badge float-right" }, [_vm._v("Ik")])
+  return _c("div", { staticClass: "outgoing_msg" }, [
+    _c("div", { staticClass: "sent_msg" }, [
+      _c("p", [_vm._t("default")], 2),
+      _vm._v(" "),
+      _c("span", { staticClass: "time_date" })
+    ])
   ])
 }
 var staticRenderFns = []

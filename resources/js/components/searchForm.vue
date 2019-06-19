@@ -7,16 +7,20 @@
                     <div class="card-body">
                         <form @submit="formSubmit">
                         <strong>Merk:</strong>
-                        <select class="form-control" v-model="choosen">
-
-                            <option v-for="item in makes">
+                        <select @change="makeChange" class="form-control" v-model="selectedMake">
+                            <option value="alle">Alle</option>
+                            <option v-for="item in makes" v-bind:value="item.make">
                                 {{item.make}}
                             </option>
 
                         </select>
-
-                        <strong>Description:</strong>
-                        <textarea class="form-control" v-model="description"></textarea>
+                        <strong>Model:</strong>
+                        <select class="form-control" :disabled="this.models == []" v-model="selectedModel">
+                            <option value="alle" v-if="this.models != []">Alle</option>
+                            <option v-for="item in models" v-bind:value="item.model">
+                                {{item.model}}
+                            </option>
+                        </select>
 
                         <button class="btn btn-success">Zoeken</button>
                         </form>
@@ -35,16 +39,17 @@
     export default {
         data() {
             return {
-              makes: [],
-              choosen: '',
-              description: '',
+              makes: '',
+              selectedMake: 'alle',
+              models: '',
+              selectedModel: 'alle',
               output: ''
             };
         },
 
         created() {
             axios
-                .post('axiostest')
+                .post('getMakes')
                 .then(response => (this.makes = response.data))
                 .catch(error => console.log(error))
         },
@@ -56,19 +61,24 @@
 
 
         methods: {
-            // makeChange(e) {
-
-            // }
+            makeChange() {
+                this.models = '';
+                axios
+                    .post('getModels', {make: this.selectedMake})
+                    .then(response => (this.models = response.data))
+                    .catch(error => console.log(error))
+            },
 
             formSubmit(e) {
                 e.preventDefault();
                 let currentObj = this;
-                axios.post('axiostest', {
-                    // name: this.name,
-                    // description: this.description
+                axios.post('listing/zoeken', {
+                    make: this.selectedMake,
+                    model: this.selectedModel
                 })
                 .then(function (response) {
-                    currentObj.output = response.data;
+                    currentObj.output = response.data.redirect;
+                    window.location = response.data.redirect;
                 })
                 .catch(function (error) {
                     currentObj.output = error;

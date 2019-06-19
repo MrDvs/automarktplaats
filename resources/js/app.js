@@ -8,6 +8,10 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import Vue from 'vue'
+
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll)
 
 /**
  * The following block of code may be used to automatically register your
@@ -21,8 +25,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('search-form', require('./components/searchForm.vue').default);
-Vue.component('chat-messages', require('./components/ChatMessages.vue'));
-Vue.component('chat-form', require('./components/ChatForm.vue'));
+Vue.component('message', require('./components/message.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,36 +35,34 @@ Vue.component('chat-form', require('./components/ChatForm.vue'));
 
 const app = new Vue({
     el: '#app',
+});
+
+const chat = new Vue({
+    el: '#chat',
 
     data: {
-        messages: []
-    },
-
-    created() {
-        this.fetchMessages();
-
-        Echo.private('chat')
-			.listen('MessageSent', (e) => {
-				this.messages.push({
-					message: e.message.message,
-					user: e.user
-				});
-			});
+        message: '',
+        receiver: document.querySelector("input[name=receiver]").value,
+        chat:{
+            message:[]
+        },
     },
 
     methods: {
-        fetchMessages() {
-            axios.get('chat/messages').then(response => {
-                this.messages = response.data;
-            });
+        send() {
+            if (this.message.length != 0) {
+                console.log(this.message)
+                axios
+                    .post('send', {
+                        message: this.message,
+                        receiver: this.receiver
+                    })
+                    .then(response => (this.makes = response.data))
+                    .catch(error => console.log(error))
+                this.chat.message.push(this.message)
+                this.message = ''
+            }
         },
+    },
 
-        addMessage(message) {
-            this.messages.push(message);
-
-            axios.post('chat/messages', message).then(response => {
-              console.log(response.data);
-            });
-        }
-    }
 });

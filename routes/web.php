@@ -15,7 +15,7 @@
 Auth::routes();
 
 // Resource route voor de listings
-Route::post('listing/zoeken', 'ListingController@search');
+
 
 Route::get('listing/zoeken/{make}', 'ListingController@searchMake');
 Route::get('listing/zoeken/{make}/{model}', 'ListingController@searchMakeModel');
@@ -28,7 +28,9 @@ Route::get('/test', 'PageController@test');
 // Ajax calls
 Route::get('/addFavorite', 'FavoriteController@store');
 Route::get('/removeFavorite', 'FavoriteController@destroy');
-Route::post('/axiostest', 'ListingController@axios');
+Route::post('/getMakes', 'ListingController@getMakes');
+Route::post('/getModels', 'ListingController@getModels');
+Route::post('/listing/zoeken', 'ListingController@search');
 
 // Home routes
 Route::get('/', 'PageController@index')->name('index');
@@ -40,9 +42,8 @@ Route::get('/profiel/{slug}', 'ProfileController@show');
 Route::put('/profiel/{id}', 'ProfileController@update');
 
 // Chat routes
-Route::get('/chat', 'ChatsController@index');
-Route::get('/chat/messages', 'ChatsController@fetchMessages');
-Route::post('/chat/messages', 'ChatsController@sendMessage');
+Route::get('/chat/{id}', 'ChatController@index');
+Route::post('/chat/send', 'ChatController@send');
 
 // Bid routes
 Route::post('/bieden', 'BidController@store');

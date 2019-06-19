@@ -29,6 +29,6 @@
 
                 this.newMessage = ''
             }
-        }    
+        }
     }
 </script>

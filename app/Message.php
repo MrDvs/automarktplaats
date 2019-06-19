@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $fillable = ['message'];
-
-    public function user()
+    public function sender()
 	{
-	  return $this->belongsTo('App\User');
+	  return $this->belongsTo('App\User', 'sender_id', 'id');
+	}
+
+    public function receiver()
+	{
+	  return $this->belongsTo('App\User', 'receiver_id', 'id');
 	}
 }

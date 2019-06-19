@@ -262,37 +262,16 @@ class ListingController extends Controller
 
     public function search(Request $request)
     {
-
-        echo 'Hallo daar <br>';
-        echo 'Ik verwachte je al<br><br>';
-
-        // hier haal ik de csrf token uit de request data
-        $requests = $request->all();
-        array_shift($requests);
-        print_r($requests);
-        echo '<br><br>';
-        $requestt = $requests['make'];
-        print_r(explode('|', $requestt));
-
-        $listings = listing::with('vehicle', 'images', 'bids', 'favorites')->paginate(10);
-        foreach ($listings as $key => $listing) {
-            echo $listing['vehicle']['model'];
-            foreach ($requests as $filter) {
-                $exploded = explode('|', $filter);
-                if ($exploded[1] !=  '') {
-                    if ($listing['vehicle'][$exploded[0]] != $exploded[1]) {
-                    unset($listings[$key]);
-                }
-                }
+        if (request('make') != 'alle') {
+            if (request('model') != 'alle') {
+                return ['redirect' => url('/listing/zoeken/'.request('make').'/'.request('model'))];
+            } else {
+                return ['redirect' => url('/listing/zoeken/'.request('make'))];
             }
+        } else {
+            return ['redirect' => url('/listing')];
         }
-
-        // foreach ($listings as $listing) {
-        //     print_r($listing);
-        //     echo '<br><br>';
-        // }
-
-        return view('listings.index', ['listings' => $listings]);
+        return response()->json(request('make'));
     }
 
     public function searchMake($make)
@@ -316,9 +295,17 @@ class ListingController extends Controller
         return view('listings.index', ['listings' => $listings]);
     }
 
-    public function axios()
+    public function getMakes()
     {
         $makes = vehicle::select('make')->distinct()->get();
         return response()->json($makes);
+    }
+
+    public function getModels(Request $request)
+    {
+        if (request('make') != 'alle') {
+            $models = vehicle::select('model')->where('make', request('make'))->get();
+            return response()->json($models);
+        }
     }
 }

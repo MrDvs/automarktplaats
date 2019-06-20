@@ -6,7 +6,11 @@
 
 	<h1 id="title">{{ $listing->title }}</h1>
 	<h2>{{$listing['vehicle']->make}} {{$listing['vehicle']->model}}</h2>
-	<h5>Deze advertentie verloopt {{$timeLeft}}</h5>
+	@if($listing['active'])
+		<h5>Deze advertentie verloopt {{$timeLeft}}</h5>
+	@else
+		<h5>Deze advertentie verliep {{$timeLeft}}</h5>
+	@endif
 
 	{{-- Als er errors zijn, worden deze hier weergeven. Dit zijn validatie errors. --}}
 	@if ($errors->any())
@@ -60,58 +64,51 @@
 		</div>
 
 		<div class="vehicle-information col-md-4">
-			{{-- <h4 style="font-weight: bold;">Beknopte informatie:</h4>
-			<hr>
-
-			<h5>Kenteken: {{$listing['vehicle']->license_plate}}</h5>
-			<h5>Bouwjaar: {{$listing['vehicle']->year}}</h5>
-			<h5>Kleur: {{$listing['vehicle']->color}}</h5>
-			<h5>Staat: {{$listing['vehicle']->state}}</h5>
-
-			<h5>Versnellingsbak: {{$listing['vehicle']->transmission}}</h5>
-
-			<h5>Brandstof: {{$listing['vehicle']->fuel_type}}</h5>
-
-			<h5>Vermogen: {{$listing['vehicle']->power}} PK</h5> --}}
 			<h4>Biedingen</h4>
-			@if (Auth::check())
-				<form action="{{url('/bieden')}}" method="POST">
+			@if($listing['active'])
+				@if (Auth::check())
+					<form action="{{url('/bieden')}}" method="POST">
 
-					{{ csrf_field() }}
-					<div class="form-group">
-						<label for="bidInput">Breng een bod uit (vanaf €{{$listing['starting_price']}}): </label>
-						<input  class="form-control" type="text" id="bidInput" name="bidAmount" placeholder="Bedrag">
-					</div>
-					<input type="hidden" name="listingId" value="{{$listing['id']}}">
-					<input type="hidden" name="minAmount" value="{{$listing['starting_price']}}">
-					<button type="submit">Bied</button>
+						{{ csrf_field() }}
+						<div class="form-group">
+							<label for="bidInput">Breng een bod uit (vanaf €{{$listing['starting_price']}}): </label>
+							<input  class="form-control" type="text" id="bidInput" name="bidAmount" placeholder="Bedrag">
+						</div>
+						<input type="hidden" name="listingId" value="{{$listing['id']}}">
+						<input type="hidden" name="minAmount" value="{{$listing['starting_price']}}">
+						<button type="submit">Bied</button>
 
-				</form>
-			@endif
-			@if(count($listing['bids']))
-				@foreach($listing['bids'] as $bid)
-					<div class="bid" style="background-color: #fff; margin: 5px;">
-						<div class="row">
-							<div class="col-md-4">
-								<p class="bid-name">
-									{{$bid['username']}}
-								</p>
-							</div>
-							<div class="col-md-4">
-								<p class="bid-amount">
-									{{$bid['amount']}}
-								</p>
-							</div>
-							<div class="col-md-4">
-								<p class="bid-amount">
-									{{$bid['created_at']->format('d M. Y')}}
-								</p>
+					</form>
+				@endif
+				@if(count($listing['bids']))
+				<div class="bids" style="overflow-x: hide; overflow-y: scroll; max-height: 320px">
+					@foreach($listing['bids'] as $bid)
+						<div class="bid" style="background-color: #fff; margin: 5px;">
+							<div class="row">
+								<div class="col-md-4">
+									<p class="bid-name">
+										{{$bid['username']}}
+									</p>
+								</div>
+								<div class="col-md-4">
+									<p class="bid-amount">
+										{{$bid['amount']}}
+									</p>
+								</div>
+								<div class="col-md-4">
+									<p class="bid-amount">
+										{{$bid['created_at']->format('d M. Y')}}
+									</p>
+								</div>
 							</div>
 						</div>
-					</div>
-				@endforeach
+					@endforeach
+				</div>
+				@else
+					<h5>Er is nog niet geboden op deze advertentie. Breng het eerste bod uit!</h5>
+				@endif
 			@else
-				<h5>Er is nog niet geboden op deze advertentie. Breng het eerste bod uit!</h5>
+				<h5>Deze advertentie is verlopen, bieden is niet meer mogelijk.</h5>
 			@endif
 		</div>
 
@@ -186,8 +183,9 @@
 
 	<div class="seller-information">
 		<h4>Verkoper informatie</h4>
+		<a href="{{url('chat/'.$listing['user']->id)}}" class="btn btn-secondary">Chat met {{$listing['user']->name}}</a>
 		{{-- {{$listing['user']}} --}}
-		<h5>Naam: {{$listing['user']->first_name ?? ""}} {{$listing['user']->suffix_name ?? ""}} {{$listing['user']->last_name ?? ""}}</h5>
+		<h5>Naam: {{$listing['user']->name}}</h5>
 		<h5>Email: <a href="mailto:{{$listing['user']->email}}">{{$listing['user']->email}}</a></h5>
 		<h5>Telefoon: <a href="tel:{{$listing['user']->phone}}">{{$listing['user']->phone}}</a></h5>
 		<h5>Adres: {{$listing['user']->street}} {{$listing['user']->street_number}} {{$listing['user']->street_suffix ?? ""}}, {{$listing['user']->zipcode}} {{$listing['user']->city}}</h5>

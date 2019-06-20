@@ -65,6 +65,28 @@ class ListingController extends Controller
         request()->validate([
             'mainImage' => 'required|image|max:2048',
             'extraImages.*' => 'required|image|max:2048',
+            'title' => 'required|max:191',
+            'description' => 'required|string',
+            'price' => 'nullable|numeric|digits_between:0,11',
+            'make' => 'required|max:191',
+            'model' => 'required|max:191',
+            'licenseplate' => 'nullable',
+            'mileage' => 'required|numeric|digits_between:0,11',
+            'year' => 'required|numeric|digits_between:0,5',
+            'color' => 'required|string',
+            'state' => 'required|string',
+            'body' => 'required|string',
+            'apk' => 'nullable|date',
+            'transmission' => 'required|string',
+            'gear' => 'required|numeric|digits_between:0,11',
+            'capacity' => 'nullable|numeric|digits_between:0,11',
+            'cylinder' => 'nullable|numeric|digits_between:0,11',
+            'weight' => 'nullable|numeric|digits_between:0,11',
+            'drive' => 'required|string',
+            'fuel' => 'required|string',
+            'door' => 'required|numeric|digits_between:0,11',
+            'seat' => 'required|numeric|digits_between:0,11',
+            'power' => 'nullable|numeric|digits_between:0,11',
         ]);
 
         $vehicle = new vehicle();
@@ -94,7 +116,7 @@ class ListingController extends Controller
         $listing->vehicle_id = $vehicle->id;
         $listing->title = request('title');
         $listing->description = request('description');
-        $listing->starting_price = request('price');
+        $listing->starting_price = (null == request('price') ? 0 : request('price'));
         $listing->expiration_date = Carbon::now()->addWeek();
         $listing->save();
 
@@ -140,6 +162,10 @@ class ListingController extends Controller
     public function show($id)
     {
         $listing = listing::where('id', $id)->with('vehicle', 'user', 'images', 'bids')->get();
+        // Als de advertentie verlopen word hij inactief gesteld
+        if ($listing[0]['expiration_date'] < Carbon::now() && $listing[0]['active'] == 1) {
+            Listing::where('id', $id)->update(['active' => 0]);
+        }
         Carbon::setLocale('nl');
         $timeLeft = Carbon::parse($listing[0]['expiration_date'])->diffForHumans();
 
@@ -160,31 +186,6 @@ class ListingController extends Controller
                 $user = User::find($bid['user_id']);
                 $listing[0]['bids'][$key]['username'] = $user['first_name'];
             }
-        }
-
-        switch ($listing[0]['vehicle']->state) {
-            case 'U':
-                $listing[0]['vehicle']->state = 'Gebruikt';
-                break;
-
-            case 'N':
-                $listing[0]['vehicle']->state = 'Nieuw';
-                break;
-
-            default:
-                break;
-        }
-        switch ($listing[0]['vehicle']->transmission) {
-            case 'A':
-                $listing[0]['vehicle']->transmission = 'Automaat';
-                break;
-
-            case 'H':
-                $listing[0]['vehicle']->transmission = 'Handgeschakeld';
-                break;
-
-            default:
-                break;
         }
 
         // Zet het format om naar dag-maand-jaar
@@ -211,8 +212,8 @@ class ListingController extends Controller
      */
     public function edit($id)
     {
-        $listing = listing::find($id);
-        return view('listings.edit', ['listing' => $listing]);
+        $listing = listing::where('id', $id)->with('vehicle')->get();
+        return view('listings.edit', ['listing' => $listing[0]]);
     }
 
     /**
@@ -224,12 +225,52 @@ class ListingController extends Controller
      */
     public function update(Request $request, $id)
     {
+        request()->validate([
+            'title' => 'required|max:191',
+            'description' => 'required|string',
+            'price' => 'nullable|numeric|digits_between:0,11',
+            'make' => 'required|max:191',
+            'model' => 'required|max:191',
+            'mileage' => 'required|numeric|digits_between:0,11',
+            'color' => 'required|string',
+            'state' => 'required|string',
+            'body' => 'required|string',
+            'apk' => 'nullable|date',
+            'capacity' => 'nullable|numeric|digits_between:0,10',
+            'cylinder' => 'nullable|numeric|digits_between:0,10',
+            'weight' => 'nullable|numeric|digits_between:0,10',
+            'door' => 'required|numeric|digits_between:0,10',
+            'seat' => 'required|numeric|digits_between:0,10',
+            'power' => 'nullable|numeric|digits_between:0,10',
+        ]);
+
         $listing = listing::find($id);
         $listing->title = request('title');
         $listing->description = request('description');
+        $listing->starting_price = (null == request('price') ? 0 : request('price'));
         $listing->save();
 
-        return redirect('listing/')->with('succes-message', 'Je advertentie is succesvol aangepast!');
+        $vehicle = vehicle::find($listing->vehicle_id);
+        $vehicle->make = request('make');
+        $vehicle->model = request('model');
+        $vehicle->mileage = request('mileage');
+        $vehicle->color = request('color');
+        $vehicle->state = request('state');
+        $vehicle->body_type = request('body');
+        $vehicle->apk_expiration = carbon::parse(request('apk'))->format("Y-m-d");
+        $vehicle->engine_capicity = request('capacity');
+        $vehicle->cylinders = request('cylinder');
+        $vehicle->empty_weight = request('weight');
+        $vehicle->doors = request('door');
+        $vehicle->seats = request('seat');
+        $vehicle->power = request('power');
+        $vehicle->save();
+
+        if (Auth::id() != $listing['user_id']) {
+            return url('admin/listings');
+        } else {
+            return redirect('listing/')->with('succes-message', 'Je advertentie is succesvol aangepast!');
+        }
     }
 
     /**
@@ -242,7 +283,7 @@ class ListingController extends Controller
     {
         $listing = listing::where('id', $id)->with('images', 'vehicle')->get();
 
-        if ($listing[0]['user_id'] == Auth::id()) {
+        if ($listing[0]['user_id'] == Auth::id() || Auth::user()->is_admin) {
 
             // dd($listing);
 
@@ -256,7 +297,7 @@ class ListingController extends Controller
 
             return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
         } else {
-            echo "Das machen sie eswas nicht machen meiner soon";
+            return back();
         }
     }
 
@@ -280,6 +321,10 @@ class ListingController extends Controller
             $query->where('make', '=', $make);
         })->paginate(10);
 
+        foreach ($listings as $key => $listing) {
+            $listings[$key]['favorited'] = count($listing['favorites']);
+        }
+
         return view('listings.index', ['listings' => $listings]);
     }
 
@@ -292,6 +337,10 @@ class ListingController extends Controller
             ];
         })->paginate(10);
 
+        foreach ($listings as $key => $listing) {
+            $listings[$key]['favorited'] = count($listing['favorites']);
+        }
+
         return view('listings.index', ['listings' => $listings]);
     }
 
@@ -303,8 +352,9 @@ class ListingController extends Controller
 
     public function getModels(Request $request)
     {
+        // Haal alle unieke modellen van het geselecteerde merk uit de database
         if (request('make') != 'alle') {
-            $models = vehicle::select('model')->where('make', request('make'))->get();
+            $models = vehicle::select('model')->distinct()->where('make', request('make'))->get();
             return response()->json($models);
         }
     }

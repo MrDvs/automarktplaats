@@ -6,7 +6,7 @@
 	<div class="outgoing_msg">
       <div class="sent_msg">
         <p><slot></slot></p>
-        <span class="time_date"></span> </div>
+        <span class="time_date">Zojuist</span> </div>
     </div>
 </template>
 

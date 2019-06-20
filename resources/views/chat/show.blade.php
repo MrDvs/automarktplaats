@@ -173,7 +173,7 @@
               </div>
               <div class="type_msg">
                 <div class="input_msg_write">
-                  <input type="text" class="write_msg" placeholder="Type je bericht..." v-model="message" @keyup.enter="send">
+                  <input type="text" name="message" class="write_msg" placeholder="Type je bericht..." v-model="message" @keyup.enter="send">
                   <input type="hidden" name="receiver" value="{{$receiver->id}}">
                   <button class="msg_send_btn" type="button" v-on:click="send"><i class="fas fa-paper-plane"></i></button>
                 </div>

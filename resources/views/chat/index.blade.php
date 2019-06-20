@@ -12,7 +12,9 @@
   background: #f8f8f8 none repeat scroll 0 0;
   float: left;
   overflow: hidden;
-  width: 40%; border-right:1px solid #c4c4c4;
+  width: 100%;
+  border-right:
+  1px solid #c4c4c4;
 }
 .inbox_msg {
   border: 1px solid #c4c4c4;
@@ -153,18 +155,29 @@
       </div>
 
       <div class="inbox_chat">
+      @if(!$chats)
+      <h3 class="text-center">Je hebt nog geen chatberichten!</h3>
+      @else
+      {{$name = ''}}
+        @foreach($chats as $chat)
+          @if($name != $chat['username'])
+            {{$name = $chat['username']}}
+            @continue
+          @endif
 
-      @foreach($chats as $chat)
-        <div class="chat_list">
-          <div class="chat_people">
-            <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-            <div class="chat_ib">
-              <h5>{{}} <span class="chat_date">Dec 25</span></h5>
-              <p>Test, which is a new approach to have all solutions
-                astrology under one roof.</p>
+          <a href="{{url('chat/'.($chat['receiver']['id'] == Auth::id() ? $chat['sender']['id'] : $chat['receiver']['id']))}}">
+            <div class="chat_list">
+              <div class="chat_people">
+                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <div class="chat_ib">
+                  {{-- <h5>{{$chat['username']}}</h5> --}}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </a>
+
+        @endforeach
+      @endif
 
       </div>
     </div>

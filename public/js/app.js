@@ -37185,7 +37185,7 @@ var render = function() {
     _c("div", { staticClass: "sent_msg" }, [
       _c("p", [_vm._t("default")], 2),
       _vm._v(" "),
-      _c("span", { staticClass: "time_date" })
+      _c("span", { staticClass: "time_date" }, [_vm._v("Zojuist")])
     ])
   ])
 }

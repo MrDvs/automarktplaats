@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Events\ChatEvent;
 use App\Message;
 use App\User;
+use DB;
 
 class ChatController extends Controller
 {
@@ -17,21 +18,40 @@ class ChatController extends Controller
 
     public function index()
     {
-    	// $messages = Message::where('receiver_id', Auth::id())
-	    // 	->orWhere('sender_id', Auth::id())
-	    // 	->get();
+        // $query = 'SELECT * FROM `messages` WHERE sender_id = :id1 OR receiver_id = :id2 GROUP BY sender_id, receiver_id';
+        // $chats = DB::select($query, ['id1' => Auth::id(), 'id2' => Auth::id()]);
 
-	    $chats = Message::groupBy('receiver_id')->where('sender_id', Auth::id())->get();
+        $chats = Message::where('sender_id', Auth::id())
+            ->orWhere('receiver_id', Auth::id())
+            ->groupBy('sender_id', 'receiver_id')
+            ->orderBy('updated_at')
+            ->get();
 
-	   	dd($chats);
+        if (count($chats)) {
+            foreach ($chats as $key => $chat) {
+                if ($chat['sender_id'] != Auth::id()) {
+                    $username = User::find($chat['sender_id']);
+                    $chats[$key]['username'] = $username['name'];
+                } else {
+                    $user = User::find($chat['receiver_id']);
+                    $chats[$key]['username'] = $user['name'];
+                }
+            }
+        } else {
+            $chats = 0;
+        }
+        // dd($chats);
 
-
-	    // return view('chat.index', ['chats' => $chats]);
+	    return view('chat.index', ['chats' => $chats]);
 
     }
 
     public function show($id)
     {
+        $user = User::find($id);
+        if (!count($user)) {
+            return back();
+        }
     	$messages = Message::
 	    	where([
 	    		['sender_id', $id],
@@ -59,6 +79,10 @@ class ChatController extends Controller
 
     public function send(Request $request)
     {
+        request()->validate([
+            'message' => 'required'
+        ]);
+
     	$message = new Message;
     	$message->sender_id = Auth::id();
     	$message->receiver_id = request('receiver');

@@ -107,8 +107,8 @@
 					<div class="form-group">
 						<label for="stateInput">Staat</label>
 						<select class="form-control" name="state" class="custom-select" id="stateInput" value="{{old('state')}}">
-						  <option value="U" selected>Gebruikt</option>
-						  <option value="N">Nieuw</option>
+						  <option value="Gebruikt" selected>Gebruikt</option>
+						  <option value="Nieuw">Nieuw</option>
 						</select>
 					</div>
 
@@ -137,7 +137,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="capacityInput">Motor inhoud</label>
+						<label for="capacityInput">Motor inhoud (cc)</label>
 						<input type="number" id="capacityInput" class="form-control" name="capacity" placeholder="Motor inhoud" value="{{old('capacity')}}">
 					</div>
 

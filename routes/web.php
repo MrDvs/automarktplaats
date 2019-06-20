@@ -14,12 +14,9 @@
 // Auth routes
 Auth::routes();
 
-// Resource route voor de listings
-
-
+// Listing routes
 Route::get('listing/zoeken/{make}', 'ListingController@searchMake');
 Route::get('listing/zoeken/{make}/{model}', 'ListingController@searchMakeModel');
-
 Route::resource('listing', 'ListingController');
 
 // Test route
@@ -40,6 +37,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profiel', 'ProfileController@index')->name('profiel');
 Route::get('/profiel/{slug}', 'ProfileController@show');
 Route::put('/profiel/{id}', 'ProfileController@update');
+Route::delete('/profiel/delete/{id}', 'ProfileController@destroy');
+
+// Admin routes
+Route::get('/admin', 'AdminController@index')->name('admin');
+Route::get('/admin/{slug}', 'AdminController@show');
 
 // Chat routes
 Route::get('/chat', 'ChatController@index')->name('chat');

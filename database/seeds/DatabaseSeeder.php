@@ -51,10 +51,10 @@ class DatabaseSeeder extends Seeder
             'license_plate' => 'SF186K',
             'year' => 2016,
             'color' => 'Wit',
-            'state' => 'U',
+            'state' => 'Gebruikt',
             'body_type' => 'Coupe',
             'apk_expiration' => '2020-09-02',
-            'transmission' => 'A',
+            'transmission' => 'Automaat',
             'gears' => 7,
             'engine_capicity' => 5204,
             'cylinders' => 10,
@@ -71,6 +71,7 @@ class DatabaseSeeder extends Seeder
         DB::table('listings')->insert([
             'title' => 'Audi R8 V10 Plus te koop',
             'description' => 'Nette Audi, altijd binnen gestaan',
+            'expiration_date' => Carbon::now()->addWeek(),
             'starting_price' => 210000,
             'user_id' => 1,
             'vehicle_id' => 1,
@@ -89,7 +90,7 @@ class DatabaseSeeder extends Seeder
         DB::table('vehicles')->insert([
             'make' => 'Audi',
             'model' => 'RS6',
-            'state' => 'N',
+            'state' => 'Nieuw',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -98,6 +99,7 @@ class DatabaseSeeder extends Seeder
             'title' => 'Audi RS6 V8 Performance te koop',
             'description' => 'Nette Audi, altijd buiten gestaan',
             'starting_price' => 150000,
+            'expiration_date' => Carbon::now()->addWeek(),
             'user_id' => 2,
             'vehicle_id' => 2,
             'created_at' => Carbon::now(),

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use \App\favorite;
 use \App\listing;
+use \App\User;
 use \App\Image;
 use \App\Bid;
 
@@ -25,8 +26,8 @@ class ProfileController extends Controller
 
         return view('profile.index', [
             'user' => $user
-            // 'listings' => $listings, 
-            // 'bids' => $bids, 
+            // 'listings' => $listings,
+            // 'bids' => $bids,
             // 'favorites' => $favorites
         ]);
     }
@@ -112,7 +113,27 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($id);
+        request()->validate([
+            'name' => 'required|string|max:191',
+            'phone' => 'nullable|numeric|digits_between:0,10',
+            'zipcode' => 'nullable|string|max:7',
+            'city' => 'nullable|string|max:191',
+            'street' => 'nullable|string|max:191',
+            'housenumber' => 'nullable|numeric|digits_between:0,10',
+            'housenumberSuffix' => 'nullable|max:191',
+        ]);
+
+        $user = User::find($id);
+        $user->name = request('name');
+        $user->phone = request('phone');
+        $user->zipcode = request('zipcode');
+        $user->city = request('city');
+        $user->street = request('street');
+        $user->street_number = request('housenumber');
+        $user->street_suffix = request('housenumberSuffix');
+        $user->save();
+
+        return back();
     }
 
     /**
@@ -123,6 +144,6 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd($id);
     }
 }

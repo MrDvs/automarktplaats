@@ -9,6 +9,7 @@ use \App\listing;
 use \App\User;
 use \App\Image;
 use \App\Bid;
+use Storage;
 
 class ProfileController extends Controller
 {
@@ -144,6 +145,24 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
+        $user = User::find($id);
+        $user->delete();
+
+        $listing = listing::where('user_id', $id)->with('images', 'vehicle')->get();
+        // CHeck of de listing word verwijderd door een geautoriseerde admin of een user
+        if ($listing[0]['user_id'] == Auth::id() || Auth::user()->is_admin) {
+
+            foreach ($listing[0]['images'] as $image) {
+                echo $image->img_path."<br><br>";
+                Storage::delete('/public/'.$image->img_path);
+                $image->delete();
+            }
+            $listing[0]['vehicle']->delete();
+            $listing[0]->delete();
+
+            return redirect('/');
+        } else {
+            return back();
+        }
     }
 }

@@ -128,7 +128,6 @@
 	</div>
 
 	@if(Auth::check())
-		{{$favorite}}
 		@if($favorite)
 			<script>
 				$('.favorite-active').css('display', 'block');

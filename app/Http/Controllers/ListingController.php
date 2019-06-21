@@ -257,6 +257,7 @@ class ListingController extends Controller
         $vehicle->color = request('color');
         $vehicle->state = request('state');
         $vehicle->body_type = request('body');
+        // zet de APK verval datum in een database vriendelijk formaat
         $vehicle->apk_expiration = carbon::parse(request('apk'))->format("Y-m-d");
         $vehicle->engine_capicity = request('capacity');
         $vehicle->cylinders = request('cylinder');
@@ -282,10 +283,8 @@ class ListingController extends Controller
     public function destroy($id)
     {
         $listing = listing::where('id', $id)->with('images', 'vehicle')->get();
-
+        // CHeck of de listing word verwijderd door een geautoriseerde admin of een user
         if ($listing[0]['user_id'] == Auth::id() || Auth::user()->is_admin) {
-
-            // dd($listing);
 
             foreach ($listing[0]['images'] as $image) {
                 echo $image->img_path."<br><br>";
@@ -295,7 +294,7 @@ class ListingController extends Controller
             $listing[0]['vehicle']->delete();
             $listing[0]->delete();
 
-            return redirect('listing/')->with('error-message', 'Je advertentie is succesvol verwijderd!');
+            return redirect('profiel/advertenties')->with('error-message', 'Je advertentie is succesvol verwijderd!');
         } else {
             return back();
         }
@@ -303,20 +302,43 @@ class ListingController extends Controller
 
     public function search(Request $request)
     {
+        // Check waar op gezocht moet worden (alleen op merk of ook op model) en return die url
+        request()->validate([
+            'year' => 'nullable|numeric|digits_between:0,4',
+            'price' => 'nullable|numeric|digits_between:0,10',
+        ]);
+
         if (request('make') != 'alle') {
             if (request('model') != 'alle') {
-                return ['redirect' => url('/listing/zoeken/'.request('make').'/'.request('model'))];
+                $url = url('/listing/zoeken/'.request('make').'/'.request('model'));
             } else {
-                return ['redirect' => url('/listing/zoeken/'.request('make'))];
+                $url = url('/listing/zoeken/'.request('make'));
             }
         } else {
-            return ['redirect' => url('/listing')];
+            $url = url('/listing');
         }
-        return response()->json(request('make'));
+
+        if (request('year') != '' || request('price') != '') {
+            if (request('year') != '' && request('price') != '') {
+                $url = url('/listing/zoeken/'.request('make').'/'.request('model').'/'.request('year').'/'.request('price'));
+            }
+            if (request('year') == '') {
+                $year = 'alle';
+                $url = url('/listing/zoeken/'.request('make').'/'.request('model').'/'.$year.'/'.request('price'));
+            }
+            if (request('price') == '') {
+                $price = 'alle';
+                $url = url('/listing/zoeken/'.request('make').'/'.request('model').'/'.request('year').'/'.$price);
+            }
+        }
+
+
+        return response()->json(['redirect' => $url]);
     }
 
     public function searchMake($make)
     {
+        // Zoek op merk gebaseerd op de slug in de URL
         $listings = listing::with('vehicle', 'images', 'bids', 'favorites')->whereHas('vehicle', function ($query) use($make) {
             $query->where('make', '=', $make);
         })->paginate(10);
@@ -324,12 +346,13 @@ class ListingController extends Controller
         foreach ($listings as $key => $listing) {
             $listings[$key]['favorited'] = count($listing['favorites']);
         }
-
-        return view('listings.index', ['listings' => $listings]);
+        $filteredOn = 'Je hebt gezocht op: <br> Merk: '.$make;
+        return view('listings.index', ['listings' => $listings, 'filteredOn' => $filteredOn]);
     }
 
     public function searchMakeModel($make, $model)
     {
+        // Zoek op merk en model gebaseerd op de slugs in de URL
         $listings = listing::with('vehicle', 'images', 'bids', 'favorites')->whereHas('vehicle', function ($query) use($make, $model) {
             [
                 [$query->where('make', '=', $make)],
@@ -341,11 +364,70 @@ class ListingController extends Controller
             $listings[$key]['favorited'] = count($listing['favorites']);
         }
 
-        return view('listings.index', ['listings' => $listings]);
+        $filteredOn = 'Je hebt gezocht op: <br> Merk: '.$make.'<br> Model: '.$model;
+
+        return view('listings.index', ['listings' => $listings, 'filteredOn' => $filteredOn]);
+    }
+
+    public function searchExtra($make, $model, $year, $price)
+    {
+        if ($make == 'alle' || $model == 'alle' || $year == 'alle' || $price == 'alle') {
+            $listings = listing::with('vehicle', 'images', 'bids', 'favorites')
+                ->paginate(10);
+
+            if ($make != 'alle') {
+                foreach ($listings as $key => $listing) {
+                    if($listing['vehicle']['make'] != $make) {
+                        unset($listings[$key]);
+                    }
+                }
+            }
+            if ($model != 'alle') {
+                foreach ($listings as $key => $listing) {
+                    if($listing['vehicle']['model'] != $model) {
+                        unset($listings[$key]);
+                    }
+                }
+            }
+            if ($year != 'alle') {
+                foreach ($listings as $key => $listing) {
+                    if($listing['vehicle']['year'] < $year) {
+                        unset($listings[$key]);
+                    }
+                }
+            }
+            if ($price != 'alle') {
+                foreach ($listings as $key => $listing) {
+                    if($listing['starting_price'] > $price) {
+                        unset($listings[$key]);
+                    }
+                }
+            }
+        } else {
+            $listings = listing::where('starting_price', '<', $price)
+                ->with('vehicle', 'images', 'bids', 'favorites')
+                ->whereHas('vehicle', function ($query) use($make, $model, $year) {
+                    [
+                        [$query->where('make', '=', $make)],
+                        [$query->where('model', '=', $model)],
+                        [$query->where('year', '>=', $year)]
+                    ];
+                })->paginate(10);
+        }
+
+        foreach ($listings as $key => $listing) {
+            $listings[$key]['favorited'] = count($listing['favorites']);
+        }
+
+        $filteredOn = 'Je hebt gezocht op: <br> Merk: '.$make.'<br> Model: '.$model.'<br> Minimaal bouwjaar: '.$year.'<br> Maximum prijs: '.$price;
+
+        // dd($listings);
+        return view('listings.index', ['listings' => $listings, 'filteredOn' => $filteredOn]);
     }
 
     public function getMakes()
     {
+        // Haal alle unieke merken uit de database
         $makes = vehicle::select('make')->distinct()->get();
         return response()->json($makes);
     }
@@ -357,5 +439,17 @@ class ListingController extends Controller
             $models = vehicle::select('model')->distinct()->where('make', request('make'))->get();
             return response()->json($models);
         }
+    }
+
+    public function closeListing($id)
+    {
+        $listing = listing::find($id);
+        if (Auth::id() == $listing['user_id'] || Auth::user()->is_admin) {
+            $updatedListing = $listing;
+            $updatedListing->active = 0;
+            $updatedListing->expiration_date = Carbon::now();
+            $updatedListing->save();
+        }
+        return back();
     }
 }

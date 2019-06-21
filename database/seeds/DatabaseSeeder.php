@@ -14,9 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'admin',
-            'first_name' => 'Meneer',
-            // 'suffix_name' => 'de',
-            'last_name' => 'de Admin',
             'city' => 'Stellendam',
             'street' => 'Tiendeweg',
             'street_number' => '99',
@@ -31,9 +28,6 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Dennis van Schie',
-            'first_name' => 'Dennis',
-            // 'suffix_name' => 'van',
-            'last_name' => 'van Schie',
             'city' => 'Bellingwolde',
             'street' => 'Nieuwe Weg',
             'street_number' => '192',
@@ -90,6 +84,7 @@ class DatabaseSeeder extends Seeder
         DB::table('vehicles')->insert([
             'make' => 'Audi',
             'model' => 'RS6',
+            'year' => 2016,
             'state' => 'Nieuw',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

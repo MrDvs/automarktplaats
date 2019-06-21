@@ -1763,6 +1763,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1770,7 +1771,9 @@ __webpack_require__.r(__webpack_exports__);
       selectedMake: 'alle',
       models: '',
       selectedModel: 'alle',
-      output: ''
+      feedback: '',
+      selectedYear: '',
+      selectedPrice: ''
     };
   },
   created: function created() {
@@ -1803,12 +1806,15 @@ __webpack_require__.r(__webpack_exports__);
       var currentObj = this;
       axios.post('listing/zoeken', {
         make: this.selectedMake,
-        model: this.selectedModel
+        model: this.selectedModel,
+        year: this.selectedYear,
+        price: this.selectedPrice
       }).then(function (response) {
-        currentObj.output = response.data.redirect;
+        console.log(response.data.redirect);
         window.location = response.data.redirect;
       })["catch"](function (error) {
-        currentObj.output = error;
+        // currentObj.output = error;
+        currentObj.feedback = error.response.data.message;
       });
     }
   }
@@ -37219,6 +37225,15 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("form", { on: { submit: _vm.formSubmit } }, [
+              _vm.feedback
+                ? _c("div", [
+                    _c("span", {
+                      staticStyle: { color: "red" },
+                      domProps: { textContent: _vm._s(_vm.feedback) }
+                    })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("strong", [_vm._v("Merk:")]),
               _vm._v(" "),
               _c(
@@ -37319,19 +37334,65 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
+              _c("strong", [_vm._v("Bouwjaar (minimum):")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.selectedYear,
+                    expression: "selectedYear"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  maxlength: "4",
+                  oninput: "this.value=this.value.replace(/[^0-9]/g,'');"
+                },
+                domProps: { value: _vm.selectedYear },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.selectedYear = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Prijs (maximum):")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.selectedPrice,
+                    expression: "selectedPrice"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  maxlength: "11",
+                  oninput: "this.value=this.value.replace(/[^0-9]/g,'');"
+                },
+                domProps: { value: _vm.selectedPrice },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.selectedPrice = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
               _c("button", { staticClass: "btn btn-success" }, [
                 _vm._v("Zoeken")
               ])
-            ]),
-            _vm._v(" "),
-            _c("strong", [_vm._v("Output:")]),
-            _vm._v(" "),
-            _c("pre", [
-              _vm._v(
-                "                    " +
-                  _vm._s(_vm.output) +
-                  "\n                    "
-              )
             ])
           ])
         ])

@@ -12,6 +12,9 @@
 		    {{ session()->get('error-message') }}
 		</div>
 	@endif
+	@if(isset($filteredOn))
+	{!! $filteredOn !!}
+	@endif
 
 	<ul id="listing-index-ul">
 		{{-- List each listing and basic information --}}
@@ -71,5 +74,5 @@
 	</ul>
 
 	{{$listings->links()}}
-	
+
 @endsection

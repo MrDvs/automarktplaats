@@ -17,10 +17,9 @@ Auth::routes();
 // Listing routes
 Route::get('listing/zoeken/{make}', 'ListingController@searchMake');
 Route::get('listing/zoeken/{make}/{model}', 'ListingController@searchMakeModel');
+Route::get('listing/zoeken/{make}/{model}/{year}/{price}', 'ListingController@searchExtra');
+Route::put('listing/sluiten/{id}', 'ListingController@closeListing');
 Route::resource('listing', 'ListingController');
-
-// Test route
-Route::get('/test', 'PageController@test');
 
 // Ajax calls
 Route::get('/addFavorite', 'FavoriteController@store');

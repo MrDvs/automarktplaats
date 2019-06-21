@@ -146,23 +146,21 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $user->delete();
-
-        $listing = listing::where('user_id', $id)->with('images', 'vehicle')->get();
+        $listings = listing::where('user_id', $id)->with('images', 'vehicle')->get();
         // CHeck of de listing word verwijderd door een geautoriseerde admin of een user
-        if ($listing[0]['user_id'] == Auth::id() || Auth::user()->is_admin) {
-
-            foreach ($listing[0]['images'] as $image) {
-                echo $image->img_path."<br><br>";
-                Storage::delete('/public/'.$image->img_path);
-                $image->delete();
+        if ($listings[0]['user_id'] == Auth::id() || Auth::user()->is_admin) {
+            foreach ($listings as $key => $listing) {
+                foreach ($listing['images'] as $image) {
+                    Storage::delete('/public/'.$image->img_path);
+                    $image->delete();
+                }
+                $listing['vehicle']->delete();
+                $listing->delete();
             }
-            $listing[0]['vehicle']->delete();
-            $listing[0]->delete();
 
-            return redirect('/');
-        } else {
-            return back();
+            $user->delete();
+
         }
+        return redirect('/');
     }
 }

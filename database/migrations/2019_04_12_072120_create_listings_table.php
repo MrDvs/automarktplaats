@@ -21,6 +21,7 @@ class CreateListingsTable extends Migration
 
             $table->string('title');
             $table->text('description');
+            $table->text('short_description');
             $table->timestamp('expiration_date');
             $table->integer('active')->default(1);
             $table->float('starting_price', 10, 2);

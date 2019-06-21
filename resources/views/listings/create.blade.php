@@ -33,7 +33,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="imgInput">Kies maximaal 5 extra afbeeldingen</label>
+						<label for="imgInput">Kies je extra afbeeldingen</label>
 						<input type="file" id="imgInput" class="form-control-file" name="extraImages[]" aria-describedby="imgHelp" multiple>
 						<small id="imgHelp" class="form-text text-muted">Tip: upload horizontaal genomen foto's voor het beste resultaat</small>
 					</div>
@@ -192,7 +192,7 @@
 				</div>
 			</div>
 
-			<button type="submit">Plaats advertentie</button>
+			<button type="submit" style="margin-bottom: 25px;" class="btn btn-primary">Plaats advertentie</button>
 		</form>
 
 	<script>

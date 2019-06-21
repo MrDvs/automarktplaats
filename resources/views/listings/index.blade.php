@@ -13,7 +13,7 @@
 		</div>
 	@endif
 	@if(isset($filteredOn))
-	{!! $filteredOn !!}
+	<h4 class="text-center">{!! $filteredOn !!}</h4>
 	@endif
 
 	<ul id="listing-index-ul">
@@ -43,14 +43,10 @@
 
 					<div class="col-md-7 listing-col">
 
-						<div class="description">
-							<h5>Beschrijving: {{$listing['description']}}</h5>
-						</div>
-
 						<div class="starting-price">
 							<h5>Richt prijs: €{{$listing['starting_price']}}</h5>
 						</div>
-
+						<hr>
 						<div class="highest-bid">
 							@if(count($listing['bids']))
 							<h5>Hoogste bod: €{{$listing['bids'][0]['amount']}}</h5>
@@ -58,7 +54,11 @@
 							<h5>Er is nog niet geboden op deze advertentie. Breng het eerste bod uit!</h5>
 							@endif
 						</div>
-
+						<hr>
+						<div class="description">
+							<h5>Beschrijving: {{$listing['short_description']}}</h5>
+						</div>
+						<hr>
 						<div class="favorited">
 							<i class="fas fa-star"></i>
 							X {{$listing['favorited']}}
@@ -66,7 +66,7 @@
 
 					</div>
 
-					<a href="{{ url('listing/'.$listing->id) }}">Meer informatie ></a>
+					<a href="{{ url('listing/'.$listing->id) }}" class="btn btn-primary" style="margin-top: 5px">Meer informatie ></a>
 
 				</div>
 			</li>

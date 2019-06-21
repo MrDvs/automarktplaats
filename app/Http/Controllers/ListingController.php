@@ -116,6 +116,7 @@ class ListingController extends Controller
         $listing->vehicle_id = $vehicle->id;
         $listing->title = request('title');
         $listing->description = request('description');
+        $listing->short_description = substr(request('description'), 0, 220);
         $listing->starting_price = (null == request('price') ? 0 : request('price'));
         $listing->expiration_date = Carbon::now()->addWeek();
         $listing->save();
@@ -184,7 +185,7 @@ class ListingController extends Controller
             foreach ($listing[0]['bids'] as $key => $bid) {
                 // echo $bid;
                 $user = User::find($bid['user_id']);
-                $listing[0]['bids'][$key]['username'] = $user['first_name'];
+                $listing[0]['bids'][$key]['username'] = $user['name'];
             }
         }
 
@@ -247,6 +248,7 @@ class ListingController extends Controller
         $listing = listing::find($id);
         $listing->title = request('title');
         $listing->description = request('description');
+        $listing->short_description = substr(request('description'), 0, 220);
         $listing->starting_price = (null == request('price') ? 0 : request('price'));
         $listing->save();
 

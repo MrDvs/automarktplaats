@@ -65,6 +65,7 @@ class DatabaseSeeder extends Seeder
         DB::table('listings')->insert([
             'title' => 'Audi R8 V10 Plus te koop',
             'description' => 'Nette Audi, altijd binnen gestaan',
+            'short_description' => 'Nette Audi, altijd binnen gestaan',
             'expiration_date' => Carbon::now()->addWeek(),
             'starting_price' => 210000,
             'user_id' => 1,
@@ -93,6 +94,7 @@ class DatabaseSeeder extends Seeder
         DB::table('listings')->insert([
             'title' => 'Audi RS6 V8 Performance te koop',
             'description' => 'Nette Audi, altijd buiten gestaan',
+            'short_description' => 'Nette Audi, altijd buiten gestaan',
             'starting_price' => 150000,
             'expiration_date' => Carbon::now()->addWeek(),
             'user_id' => 2,

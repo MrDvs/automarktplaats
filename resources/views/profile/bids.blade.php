@@ -5,12 +5,17 @@
 	<h2 class="text-center">Mijn biedingen</h2>
 	<div class="profile-bids">
 		@foreach($bids as $bid)
-			{{-- {{$bid}} --}}
-			Datum: {{$bid['created_at']->format('d F Y')}} <br>
-			Bedrag: {{$bid['amount']}} <br>
-			Geboden op: {{$bid['listing']['title']}} <br>
-			<a href="{{url('listing/'.$bid['listing']['id'])}}">Advertentie bekijken</a>
+
+			<div class="card" style="width: 18rem;">
+			  <div class="card-body">
+			    <h5 class="card-title">Geboden op: {{$bid['listing']['title']}}</h5>
+			    <p class="card-text">Bedrag: {{$bid['amount']}}</p>
+			    <p class="card-text">Datum: {{$bid['created_at']->format('d F Y')}}</p>
+			    <a href="{{url('listing/'.$bid['listing']['id'])}}">Advertentie bekijken</a>
+			  </div>
+			</div>
+
 		@endforeach
 	</div>
-		            
+
 @endsection
